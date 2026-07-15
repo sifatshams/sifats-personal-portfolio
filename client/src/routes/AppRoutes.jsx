@@ -36,6 +36,7 @@ import ErrorPage from '../pages/not-found/ErrorPage';
 import VisitorChart from '../components/admin_dashboard/VisitorChart';
 import AdminLayout from '../layout/AdminLayout';
 import AdminProfilePage from '../pages/admin/ProfilePage';
+import SettingsPage from '../pages/admin/settings/SettingsPage';
 import AdminRoute from './AdminRoute';
 import PrivateRoute from './PrivateRoute';
 
@@ -112,6 +113,9 @@ const AppRoutes = () => {
 
           {/* profile */}
           <Route path="profile" element={<AdminProfilePage />} />
+
+          {/* settings */}
+          <Route path="settings" element={<SettingsPage />} />
 
           {/* messages */}
           <Route path="messages" element={<AllMessagesPage />} />
