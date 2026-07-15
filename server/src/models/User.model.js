@@ -42,11 +42,37 @@ const userSchema = new mongoose.Schema(
       url: String,
       publicId: String,
     },
+
     role: {
       type: String,
       enum: ['user', 'admin'],
       default: 'user',
     },
+
+    // notification settings
+    notificationSettings: {
+      email: {
+        type: Boolean,
+        default: true,
+      },
+      contact: {
+        type: Boolean,
+        default: true,
+      },
+      security: {
+        type: Boolean,
+        default: true,
+      },
+      marketing: {
+        type: Boolean,
+        default: false,
+      },
+      updates: {
+        type: Boolean,
+        default: true,
+      },
+    },
+
     isActive: {
       type: Boolean,
       default: true,
