@@ -1,0 +1,36 @@
+#nprogress .bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+
+  height: 3px;
+
+  background: linear-gradient(
+    90deg,
+    #646cff 0%,
+    #4f8cff 18%,
+    #00d4ff 35%,
+    #7c3aed 55%,
+    #ff4ecd 78%,
+    #646cff 100%
+  );
+
+  background-size: 300% 100%;
+  animation: progressMove 1.4s linear infinite;
+
+  box-shadow: 0 0 8px rgba(100, 108, 255, 0.25);
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px rgba(100, 108, 255, 0.35);
+}
+
+@keyframes progressMove {
+  from {
+    background-position: 0%;
+  }
+  to {
+    background-position: 300%;
+  }
+}
