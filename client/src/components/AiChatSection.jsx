@@ -6,7 +6,7 @@ import { FaPaperPlane, FaRobot } from 'react-icons/fa';
 import aiLogo from '../assets/ai-logo.json';
 import { askGemini } from '../lib/gemini';
 
-// Lottie Fix
+// lottie
 const Lottie = LottieRaw.default ?? LottieRaw;
 
 const suggestions = [

@@ -35,7 +35,7 @@ const ForgotPassword = () => {
       <div className="absolute top-10 left-10 w-[400px] h-[400px] bg-[#646cff]/10 blur-[130px] rounded-full animate-pulse duration-[10s]"></div>
       <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-purple-500/5 blur-[130px] rounded-full animate-pulse duration-[8s]"></div>
 
-      {/* Main Card - এখানে shadow-[0_0_40px_rgba(99,102,241,0.15)] গ্লো শ্যাডো ইফেক্টটি যুক্ত করা হয়েছে */}
+      {/* Main Card */}
       <div className="relative z-10 w-full max-w-[480px] bg-[#0b1120]/90 backdrop-blur-xl border border-slate-800 rounded-[2.5rem] p-8 md:p-10 shadow-[0_0_40px_rgba(99,102,241,0.15)]">
         {/* Header */}
         <div className="text-center mb-8">

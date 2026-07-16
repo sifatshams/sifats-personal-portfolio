@@ -19,7 +19,7 @@ const ProjectForm = ({ mode = 'create' }) => {
   const { id } = useParams();
   const isEdit = mode === 'edit';
 
-  // Existing Query (Edit Mode)
+  // existing Query
   const { data: projectData, isLoading: projectLoading } = useProjectQuery(id, {
     enabled: isEdit,
   });
@@ -51,7 +51,7 @@ const ProjectForm = ({ mode = 'create' }) => {
   const [technologies, setTechnologies] = useState([]);
   const [thumbnailPreview, setThumbnailPreview] = useState('');
 
-  // Load Existing Project (All hooks must be defined before any early return)
+  // Load Existing Project
   useEffect(() => {
     if (!projectData?.data || !isEdit) return;
 
@@ -71,7 +71,7 @@ const ProjectForm = ({ mode = 'create' }) => {
     setThumbnailPreview(project.thumbnail || '');
   }, [projectData, isEdit, reset, setValue]);
 
-  // Loading conditional check is now safely placed after ALL hooks (including useEffect)
+  // loading conditional check is now safely placed after ALL hooks (including useEffect)
   if (isEdit && projectLoading) {
     return (
       <div className="flex h-[60vh] items-center justify-center">

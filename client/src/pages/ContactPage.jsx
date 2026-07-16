@@ -36,7 +36,7 @@ const ContactPage = () => {
     });
   };
 
-  // If the logged-in user is an admin, show a clean restricted access view
+  // if the logged-in user is an admin, show a clean restricted access view
   if (isAdmin) {
     return (
       <section className="relative min-h-screen overflow-hidden bg-[#020617] text-white flex items-center justify-center px-6 selection:bg-[#646cff]/30 selection:text-indigo-200">

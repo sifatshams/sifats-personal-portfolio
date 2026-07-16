@@ -30,13 +30,13 @@ const ResetPassword = () => {
     watch,
     formState: { errors },
   } = useForm({
-    mode: 'onChange', // Real-time error highlight
+    mode: 'onChange',
   });
 
   // Watch password field
   const password = watch('password', '');
 
-  // Real-time backend rule checker for UI indicators
+  // real time backend rule checker for UI indicators
   const rules = {
     length: password.length >= 8,
     uppercase: /[A-Z]/.test(password),
@@ -61,7 +61,6 @@ const ResetPassword = () => {
   };
 
   return (
-    // এখানে py-12 যোগ করা হয়েছে যেন স্ক্রিন ছোট হলেও উপরে-নিচে সুন্দর স্পেসিং থাকে
     <div className="min-h-screen bg-[#020617] flex items-center justify-center px-4 py-12 relative overflow-hidden selection:bg-[#646cff]/30 selection:text-indigo-200">
       {/* Glow */}
       <div className="absolute w-[600px] h-[600px] bg-gradient-to-tr from-[#646cff]/10 via-purple-500/5 to-transparent blur-[150px] rounded-full -top-40 -left-20 animate-pulse duration-[10s]" />

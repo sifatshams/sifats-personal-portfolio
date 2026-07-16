@@ -93,7 +93,7 @@ const RegisterPage = () => {
 
         {/* MAIN GRID */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-14 items-center">
-          {/* Left Image (No Glow, Clean & Minimal) */}
+          {/* Left Image */}
           <div className="flex justify-center xl:pr-10">
             <img
               className="w-full max-w-[480px] rounded-[32px] object-contain"

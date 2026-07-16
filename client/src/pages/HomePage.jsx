@@ -20,7 +20,7 @@ import {
 import { RiQuestionFill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 
-// TYPE ANIMATION TEXT
+// type animation text
 const words = ['Digital Growth', 'AI Solutions', 'Smart Systems'];
 
 const HomePage = () => {
