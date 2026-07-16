@@ -2,7 +2,7 @@ import User from '../models/User.model.js';
 import mediaService from './media.service.js';
 
 export const updateProfileService = async (userId, file, bodyData) => {
-  // fetch current user data to retrieve the old image's public ID
+  // fetch current user data to retrieve the old image's public id
   const user = await User.findById(userId);
   if (!user) {
     throw new Error('User not found!');
@@ -11,11 +11,11 @@ export const updateProfileService = async (userId, file, bodyData) => {
   // Retain existing image data by default
   let imageData = user.profileImage;
 
-  // 2. Process image update if a new file is uploaded
+  // Process image update if a new file is uploaded
   if (file) {
     const oldPublicId = user.profileImage?.publicId;
 
-    // Core service call to remove the old asset and store the new one in 'user_profiles' folder
+    // Core service call to remove the old asset and store the new one in 'user_profiles folder
     imageData = await mediaService.updateImage(
       file,
       oldPublicId,
@@ -23,7 +23,7 @@ export const updateProfileService = async (userId, file, bodyData) => {
     );
   }
 
-  // 3. Update document in database
+  // update document in database
   const updatedUser = await User.findByIdAndUpdate(
     userId,
     {

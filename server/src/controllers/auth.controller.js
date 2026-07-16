@@ -275,7 +275,7 @@ const updateUserProfileController = async (req, res, next) => {
       };
     }
 
-    // trigger profile update service
+    // triger profile update service
     const updateUser = await authService.updateUserProfileService(userId, {
       name,
       email,

@@ -3,11 +3,7 @@ import {
   updateProfileService,
 } from '../services/user.service.js';
 
-/**
- * @desc    Update user profile details and handle avatar replacement
- * @route   PUT /api/v1/users/profile
- * @access  Private
- */
+
 export const updateProfile = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -27,24 +23,21 @@ export const updateProfile = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Delete user account and remove associated media from cloud
- * @route   DELETE /api/v1/users/account
- * @access  Private
- */
+
 export const deleteAccount = async (req, res, next) => {
   try {
-    const userId = req.user.id; // Extracted from auth middleware
+    // extracted from auth middleware
+    const userId = req.user.id;
 
-    // Delegate account removal and image deletion logic to the service layer
+    // delegate account removal and image deletion logic to the service layer
     await deleteUserService(userId);
 
-    // Send successful response
+    // Send successful res
     res.status(200).json({
       success: true,
       message: 'Account & assets deleted successfully!',
     });
   } catch (error) {
-    next(error); // Forward error to global error handler
+    next(error);
   }
 };

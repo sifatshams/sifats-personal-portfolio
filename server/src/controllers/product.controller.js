@@ -18,7 +18,7 @@ export const createProduct = async (req, res, next) => {
       description: req.body.description,
       price: req.body.price,
       images: imagesArray,
-      createdBy: req.user.id, // id from auth middleware
+      createdBy: req.user.id,
     });
 
     res.status(201).json({

@@ -23,7 +23,7 @@ export const registerService = async (userData, file) => {
   const verificationToken = generateSecureToken();
   const verificationExpire = getTokenExpiry(24);
 
-  // create new user/admin in the database
+  // create new user /admin in the database
   const newUser = await User.create({
     name: userData.name,
     email: userData.email,
@@ -74,7 +74,6 @@ const sendOtpService = async ({ email }) => {
 };
 
 // verify otp
-// @ts-ignore
 const verifyOtpService = async ({ email, otp }) => {
   const user = await User.findOne({
     email,
@@ -137,7 +136,6 @@ const resetPasswordService = async ({ email, newPassword }) => {
 // update logged in user profile
 // @ts-ignore
 const updateUserProfileService = async (userId, updateData) => {
-  // locate client node from database instance
   const user = await User.findById(userId);
   if (!user) {
     throw new Error('User not found!');
@@ -149,7 +147,6 @@ const updateUserProfileService = async (userId, updateData) => {
   // parse incoming keys payload array
   const incomingUpdates = Object.keys(updateData);
 
-  // dynamically map update properties to user model instance
   incomingUpdates.forEach((field) => {
     // update field only if it is allowed and not undefined
     if (allowedUpdate.includes(field) && updateData[field] !== undefined) {
@@ -157,10 +154,10 @@ const updateUserProfileService = async (userId, updateData) => {
     }
   });
 
-  // commit operation document onto collections
+  // save on db
   const savedUser = await user.save();
 
-  // dispatch system log tracking routine
+  // system log 
   await logActivity({
     type: 'user',
     action: 'updated',
@@ -168,7 +165,7 @@ const updateUserProfileService = async (userId, updateData) => {
     description: `${savedUser.name} updated profile.`,
   });
 
-  // parse document layer to omit confidential records safely
+  // parse document layer
   const result = savedUser.toObject();
   // @ts-ignore
   delete result.password;

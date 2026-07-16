@@ -1,7 +1,6 @@
 import nodemailer from 'nodemailer';
 
 export const transporter = nodemailer.createTransport({
-  // @ts-ignore
   host: process.env.BREVO_HOST,
   port: process.env.BREVO_PORT,
   secure: false,

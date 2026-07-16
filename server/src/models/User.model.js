@@ -122,7 +122,6 @@ const userSchema = new mongoose.Schema(
 // ? pre password hashing with bcrypts
 userSchema.pre('save', async function () {
   // check if pass is not modified then return...
-  // @ts-ignore
   if (!this.isModified('password')) return;
 
   try {
