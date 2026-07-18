@@ -1,8 +1,8 @@
 import {
   deleteUserService,
+  updateNotificationSettingsService,
   updateProfileService,
 } from '../services/user.service.js';
-
 
 export const updateProfile = async (req, res, next) => {
   try {
@@ -23,7 +23,6 @@ export const updateProfile = async (req, res, next) => {
   }
 };
 
-
 export const deleteAccount = async (req, res, next) => {
   try {
     // extracted from auth middleware
@@ -37,6 +36,28 @@ export const deleteAccount = async (req, res, next) => {
       success: true,
       message: 'Account & assets deleted successfully!',
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// update nottification settings
+export const updateNotificationSettingsController = async (req, res, next) => {
+  try {
+    // update setttings
+    const updateSettings = await updateNotificationSettingsService(
+      req.user.id,
+      req.body,
+    );
+
+    // success res
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: 'Notification settings updated successfully!',
+        data: updateSettings,
+      });
   } catch (error) {
     next(error);
   }
