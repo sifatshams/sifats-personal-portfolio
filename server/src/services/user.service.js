@@ -42,11 +42,38 @@ export const deleteUserService = async (userId) => {
     throw new Error('User not found');
   }
 
-  // Remove profile image from cloud storage before deleting the user document
+  // remove profile image from cloud storage before deleting the user document
   if (user.profileImage?.publicId) {
     await mediaService.deleteImage(user.profileImage.publicId);
   }
 
-  // Remove user from database
+  // remove user from database
   return await User.findByIdAndDelete(userId);
+};
+
+// update nottification settings
+export const updateNotificationSettingsService = async (
+  userId,
+  notificationData,
+) => {
+  // find current user
+  const user = await User.findById(userId);
+
+  // validation
+  if (!user) {
+    const error = new Error('User not found!');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  // merge notification settings
+  user.notificationSettings = {
+    ...user.notificationSettings,
+    ...notificationData,
+  };
+
+  // save updated settings
+  await user.save();
+
+  return user.notificationSettings;
 };
