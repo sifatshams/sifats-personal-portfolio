@@ -24,7 +24,7 @@ userRoute.delete('/account', protect, deleteAccount);
 /**
  * @route   PATCH /api/users/notification-settings
  * @desc    Update notification settings
- * @access  Private (Both Admin & User)
+ * @access  Private (Both Admin & Users)
  */
 userRoute.patch(
   '/notification-settings',
