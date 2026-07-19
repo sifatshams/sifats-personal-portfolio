@@ -12,6 +12,7 @@ import authRoute from './routes/auth.route.js';
 import contactRoute from './routes/contact.route.js';
 import productRoute from './routes/product.routes.js';
 import userRoute from './routes/user.route.js';
+import taskRoute from './routes/users/task.route.js';
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use('/api/admin/dashboard', dashboardRoute);
 
 app.use('/api/users', userRoute);
 app.use('/api/products', productRoute);
+app.use('/api/tasks', taskRoute);
 
 // err handler
 app.use(errorHandler);
