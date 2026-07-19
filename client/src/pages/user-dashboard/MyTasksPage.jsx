@@ -88,7 +88,7 @@ const MyTasksPage = () => {
         </div>
 
         <button
-          onClick={() => navigate('/dashboard/tasks/new')}
+          onClick={() => navigate('/user-dashboard/tasks/new')}
           className="flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-bold text-white bg-[#646cff] hover:bg-[#535bf2] rounded-xl transition-all duration-300 cursor-pointer active:scale-95 shadow-lg shadow-[#646cff]/20 self-start sm:self-auto"
         >
           <FaPlus /> New Task

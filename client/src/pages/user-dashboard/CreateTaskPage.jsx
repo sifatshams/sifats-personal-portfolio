@@ -55,7 +55,7 @@ const CreateTaskPage = () => {
       {/* Back Button & Header */}
       <div className="flex items-center gap-4">
         <button
-          onClick={() => navigate('/dashboard/tasks')}
+          onClick={() => navigate('/user-dashboard/tasks')}
           className="p-2 rounded-xl border border-slate-800 bg-[#0b1120]/60 text-slate-400 hover:text-white hover:border-slate-700 transition-all cursor-pointer active:scale-95"
         >
           <FaArrowLeft className="text-xs" />
