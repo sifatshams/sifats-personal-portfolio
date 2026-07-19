@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import DashboardNavbar from '../components/dashboard/DashboardNavbar';
-import DashboardSidebar from '../components/dashboard/DashboardSidebar';
+import DashboardNavbar from '../components/user/DashboardNavbar';
+import DashboardSidebar from '../components/user/DashboardSidebar';
 
 const DashboardLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
