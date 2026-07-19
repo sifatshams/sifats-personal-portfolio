@@ -1,5 +1,5 @@
 // @ts-nocheck
-import useAuthStore from '../../../store/authStore';
+import useAuthStore from '../../store/authStore';
 
 const ProfileProgressCard = ({ profile }) => {
   const { user } = useAuthStore();
