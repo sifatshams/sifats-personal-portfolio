@@ -1,14 +1,12 @@
+// @ts-nocheck
 import { useEffect, useRef, useState } from 'react';
 import {
-  FaBars,
-  FaBell,
-  FaChevronDown,
-  FaCog,
-  FaSearch,
-  FaSignOutAlt,
-  FaUser,
+  FaBars as FaBarsIcon,
+  FaBell as FaBellIcon,
+  FaChevronDown as FaChevronDownIcon,
+  FaSearch as FaSearchIcon,
 } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import useAuthStore from '../../store/authStore';
 
@@ -21,8 +19,25 @@ const DashboardNavbar = ({ sidebarOpen, setSidebarOpen }) => {
   const notificationRef = useRef(null);
   const profileRef = useRef(null);
 
+  // global auth state
   const { user, logout } = useAuthStore();
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setProfileOpen(false);
+
+      // success msg
+      toast.success('User logged out successfully!');
+
+      // redirect
+      navigate('/login');
+    } catch (error) {
+      console.error('logout failed:', error);
+    }
+  };
+
+  // close dropdowns on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -40,195 +55,245 @@ const DashboardNavbar = ({ sidebarOpen, setSidebarOpen }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
-    logout();
-    toast.success('Logged out successfully!');
-    navigate('/login');
-  };
-
+  // current formatted date
   const today = new Date().toLocaleDateString('en-US', {
-    weekday: 'short',
-    month: 'short',
+    weekday: 'long',
+    month: 'long',
     day: 'numeric',
     year: 'numeric',
   });
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-800/60 bg-[#0a0a0c]/80 backdrop-blur-md shadow-md shadow-black/10">
-      <div className="flex items-center justify-between px-5 lg:px-8 py-3.5">
-        {/* Left Segment */}
+    <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-[#0d1117]/90 backdrop-blur-xl shadow-lg shadow-black/20">
+      <div className="flex items-center justify-between px-5 lg:px-8 py-4">
+        {/* left segment */}
         <div className="flex items-center gap-4">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="lg:hidden h-10 w-10 rounded-xl border border-slate-800 bg-slate-900/60 flex items-center justify-center hover:border-[#646cff] text-slate-400 hover:text-white duration-300"
+            className="lg:hidden h-11 w-11 rounded-xl border border-slate-700 bg-slate-900 flex items-center justify-center hover:border-[#646cff] duration-300 cursor-pointer"
           >
-            <FaBars className="text-sm" />
+            <FaBarsIcon />
           </button>
 
           <div>
-            <h2 className="text-lg font-bold tracking-tight text-white">
+            <h2 className="text-2xl font-bold tracking-wide text-white">
               Dashboard
             </h2>
-            <div className="flex items-center gap-1.5 text-[11px] font-medium mt-0.5">
+            <div className="flex items-center gap-2 text-sm mt-1">
               <span
-                className="text-slate-500 hover:text-slate-400 cursor-pointer"
+                className="text-slate-500 text-xs hover:text-slate-400 cursor-pointer duration-200"
                 onClick={() => navigate('/')}
               >
                 Home
               </span>
-              <span className="text-slate-600">/</span>
-              <span className="text-[#646cff]">Overview</span>
+              <span className="text-slate-600 text-xs">/</span>
+              <span className="text-[#646cff] font-semibold text-xs">
+                Overview
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Right Segment */}
+        {/* right segment */}
         <div className="flex items-center gap-4">
-          {/* System Date */}
-          <div className="hidden xl:block text-right border-r border-slate-800/80 pr-4">
-            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+          <div className="hidden xl:block text-right">
+            <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">
               Today
             </p>
-            <h4 className="font-semibold text-xs text-slate-300 mt-0.5">
+            <h4 className="font-semibold text-xs mt-1 text-slate-300">
               {today}
             </h4>
           </div>
 
-          {/* Modern Omnibar Search */}
-          <div className="hidden md:flex items-center gap-2.5 rounded-xl border border-slate-800/80 bg-slate-900/40 px-3.5 py-2 w-[260px] transition-all duration-300 focus-within:border-[#646cff]/70 focus-within:bg-slate-900/80">
-            <FaSearch className="text-slate-500 text-xs" />
+          {/* search console */}
+          <div className="hidden md:flex items-center gap-3 rounded-xl border border-slate-800/80 bg-slate-900/50 px-4 py-3 w-[320px] transition-all duration-300 focus-within:border-[#646cff]/80 focus-within:bg-slate-900">
+            <FaSearchIcon className="text-slate-500 text-xs" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Quick search..."
-              className="w-full bg-transparent outline-none text-xs text-slate-200 placeholder:text-slate-500"
+              className="w-full bg-transparent outline-none text-xs text-white placeholder:text-slate-500"
             />
           </div>
 
-          {/* Alerts Systems */}
+          {/* notifications */}
           <div ref={notificationRef} className="relative">
             <button
               onClick={() => setNotificationOpen(!notificationOpen)}
-              className="relative h-10 w-10 cursor-pointer rounded-xl border border-slate-800/80 bg-slate-900/40 flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-700 duration-300"
+              className="relative h-11 w-11 rounded-xl border border-slate-800 bg-slate-900/50 flex items-center justify-center hover:border-[#646cff] duration-300 cursor-pointer"
             >
-              <FaBell className="text-sm" />
-              <span className="absolute top-2.5 right-2.5 h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse" />
+              <FaBellIcon className="text-slate-300 text-sm" />
+              <span className="absolute top-3 right-3 h-2 w-2 rounded-full bg-red-500 ring-4 ring-[#0d1117]" />
             </button>
 
             {notificationOpen && (
-              <div className="absolute right-0 mt-3 w-80 rounded-2xl border border-slate-850 bg-[#0f0f12] shadow-2xl border-slate-800/80 overflow-hidden animate-in fade-in zoom-in-95 duration-200 z-50">
-                <div className="px-4 py-3 border-b border-slate-800/60 flex items-center justify-between bg-slate-900/20">
-                  <h3 className="font-semibold text-sm text-slate-200">
+              <div className="absolute right-0 mt-3 w-[360px] rounded-[2rem] border border-slate-800 bg-[#0b1120]/95 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden animate-in fade-in zoom-in-95 duration-200 origin-top-right z-50">
+                <div className="px-5 py-4 border-b border-slate-800/60 flex items-center justify-between bg-slate-950/40">
+                  <h3 className="font-bold text-sm text-white">
                     Notifications
                   </h3>
-                  <button className="text-xs text-[#646cff] font-medium hover:underline">
-                    Clear all
+                  <button className="text-xs text-[#646cff] font-bold hover:underline cursor-pointer">
+                    Mark all as read
                   </button>
                 </div>
 
-                <div className="max-h-[280px] overflow-y-auto divided-y divide-slate-800">
+                <div className="max-h-[320px] overflow-y-auto divide-y divide-slate-800/40">
                   {[
                     {
                       title: 'Project Approval',
-                      text: 'Your application has been deployed.',
-                      time: '5m ago',
+                      text: 'Your application has been deployed successfully.',
+                      time: '5 min ago',
                     },
                     {
                       title: 'Security Alert',
                       text: 'Profile password updated successfully.',
-                      time: '2h ago',
+                      time: '2 hours ago',
                     },
                   ].map((item, index) => (
                     <div
                       key={index}
-                      className="px-4 py-3 border-b border-slate-800/40 hover:bg-slate-900/40 cursor-pointer duration-300"
+                      className="px-5 py-4 hover:bg-slate-900/40 cursor-pointer duration-300"
                     >
-                      <h4 className="font-medium text-xs text-slate-300">
+                      <h4 className="font-bold text-xs text-slate-200">
                         {item.title}
                       </h4>
-                      <p className="text-[11px] text-slate-500 mt-0.5">
+                      <p className="text-[11px] text-slate-400 mt-1">
                         {item.text}
                       </p>
-                      <span className="text-[9px] text-slate-600 mt-1 block font-medium">
+                      <span className="text-[10px] text-slate-500 mt-2 inline-block font-medium">
                         {item.time}
                       </span>
                     </div>
                   ))}
                 </div>
+
+                <div className="p-4 text-center border-t border-slate-800/60 bg-slate-950/20">
+                  <button className="text-[#646cff] font-extrabold hover:underline text-xs cursor-pointer tracking-wider uppercase">
+                    View All Notifications
+                  </button>
+                </div>
               </div>
             )}
           </div>
 
-          {/* Profile Dropdown Component */}
+          {/* user profile dropdown */}
           <div ref={profileRef} className="relative">
             <button
               onClick={() => setProfileOpen(!profileOpen)}
-              className="flex items-center gap-2.5 cursor-pointer rounded-xl border border-slate-800/80 bg-slate-900/40 p-1.5 pr-3 hover:border-slate-700 duration-300 select-none"
+              className="flex items-center gap-3 rounded-2xl border border-slate-800/80 bg-[#0b1120]/60 p-2 pr-4 hover:border-[#646cff]/60 hover:bg-[#0b1120]/90 hover:shadow-[0_0_25px_rgba(100,108,255,0.12)] active:scale-[0.98] transition-all duration-300 group cursor-pointer"
             >
-              {user?.profileImage?.url ? (
-                <img
-                  src={user.profileImage.url}
-                  alt={user?.name || 'User'}
-                  className="h-7 w-7 rounded-lg border border-[#646cff]/40 object-cover"
-                />
-              ) : (
-                <div className="h-7 w-7 rounded-lg bg-[#646cff] flex items-center justify-center text-white font-bold text-xs">
-                  {user?.name?.charAt(0).toUpperCase() || 'U'}
-                </div>
-              )}
-
-              <div className="hidden md:block text-left">
-                <h4 className="font-semibold text-xs text-slate-300 leading-none">
-                  {user?.name || 'Sifat Coder'}
-                </h4>
+              {/* double border indicator */}
+              <div className="relative shrink-0 p-[2px] rounded-xl bg-gradient-to-tr from-slate-800 via-[#646cff]/30 to-slate-800 group-hover:from-[#646cff] group-hover:to-purple-600 transition-all duration-500">
+                {user?.profileImage?.url ? (
+                  <img
+                    src={user.profileImage.url}
+                    alt={user?.name || 'User'}
+                    className="h-9 w-9 rounded-[10px] aspect-square object-cover object-center bg-slate-900"
+                  />
+                ) : (
+                  <div className="h-9 w-9 rounded-[10px] bg-gradient-to-br from-[#646cff] via-[#5563ff] to-purple-600 flex items-center justify-center text-white font-black text-sm">
+                    {user?.name?.charAt(0).toUpperCase() || 'U'}
+                  </div>
+                )}
+                {/* online status indicator */}
+                <span className="absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full border-4 border-[#020617] bg-emerald-500 shadow-sm" />
               </div>
 
-              <FaChevronDown
-                className={`hidden md:block text-[10px] text-slate-500 transition-transform duration-300 ${profileOpen ? 'rotate-180 text-slate-300' : ''}`}
+              {/* identity details */}
+              <div className="hidden md:block text-left select-none max-w-[120px]">
+                <h4 className="text-xs font-black tracking-tight text-white group-hover:text-[#646cff] transition-colors duration-300 truncate">
+                  {user?.name || 'Sifat Coder'}
+                </h4>
+                <p className="text-[10px] font-bold text-slate-400 capitalize tracking-wider mt-0.5 truncate">
+                  {user?.role || 'User'}
+                </p>
+              </div>
+
+              <FaChevronDownIcon
+                className={`hidden md:block text-xs text-slate-500 group-hover:text-slate-300 transition-transform duration-300 ${
+                  profileOpen ? 'rotate-180 text-[#646cff]' : ''
+                }`}
               />
             </button>
 
             {profileOpen && (
-              <div className="absolute right-0 mt-3 w-64 rounded-2xl border border-slate-850 bg-[#0f0f12] shadow-2xl overflow-hidden border-slate-800/80 animate-in fade-in zoom-in-95 duration-200 z-50">
-                <div className="p-4 border-b border-slate-800/60 bg-slate-900/20">
-                  <h3 className="font-bold text-xs text-slate-200 truncate">
-                    {user?.name || 'Sifat Bin Anwar'}
-                  </h3>
-                  <p className="text-[11px] text-slate-500 truncate mt-0.5">
-                    {user?.email || 'sifat@example.com'}
-                  </p>
+              <div className="absolute right-0 mt-3 w-72 rounded-[2rem] border border-slate-800/80 bg-[#0b1120]/95 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_30px_rgba(99,102,241,0.1)] overflow-hidden animate-in fade-in zoom-in-95 duration-200 origin-top-right z-50">
+                {/* card profile details */}
+                <div className="p-5 border-b border-slate-800/60 bg-slate-950/40">
+                  <div className="flex items-center gap-4">
+                    <div className="relative shrink-0 p-[2px] rounded-xl bg-gradient-to-tr from-slate-800 to-[#646cff]/40">
+                      {user?.profileImage?.url ? (
+                        <img
+                          src={user.profileImage.url}
+                          alt="Profile"
+                          className="w-11 h-11 rounded-[10px] aspect-square object-cover object-center bg-slate-900"
+                        />
+                      ) : (
+                        <div className="w-11 h-11 rounded-[10px] bg-gradient-to-br from-[#646cff] to-purple-600 flex items-center justify-center text-white font-black text-sm">
+                          {user?.name?.charAt(0).toUpperCase() || 'U'}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="min-w-0">
+                      <h3 className="font-extrabold text-white text-sm tracking-wide truncate">
+                        {user?.name || 'Sifat Bin Anwar'}
+                      </h3>
+                      <p className="text-xs text-slate-400 font-medium truncate mt-0.5">
+                        {user?.email || 'user@gmail.com'}
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="p-1.5 space-y-0.5">
-                  <button
-                    onClick={() => {
-                      setProfileOpen(false);
-                      navigate('/dashboard/profile');
-                    }}
-                    className="w-full flex items-center gap-2.5 text-left text-xs font-medium text-slate-400 px-3 py-2.5 hover:bg-slate-900 hover:text-white rounded-xl duration-200"
+                {/* action items list */}
+                <div className="p-2 space-y-1">
+                  {/* profile link router */}
+                  <Link
+                    to="/dashboard/profile"
+                    onClick={() => setProfileOpen(false)}
+                    className="w-full flex items-center gap-3 text-left px-4 py-3 rounded-xl text-xs font-bold text-slate-300 hover:text-[#646cff] hover:bg-slate-900/50 transition-all duration-300 group cursor-pointer"
                   >
-                    <FaUser className="text-slate-500 text-sm" /> My Profile
-                  </button>
-                  <button
-                    onClick={() => {
-                      setProfileOpen(false);
-                      navigate('/dashboard/settings');
-                    }}
-                    className="w-full flex items-center gap-2.5 text-left text-xs font-medium text-slate-400 px-3 py-2.5 hover:bg-slate-900 hover:text-white rounded-xl duration-200"
+                    <span className="text-sm transition-transform duration-300 group-hover:scale-110">
+                      👤
+                    </span>
+                    <span className="tracking-wide">My Profile</span>
+                  </Link>
+
+                  {/* settings link router */}
+                  <Link
+                    to="/dashboard/settings"
+                    onClick={() => setProfileOpen(false)}
+                    className="w-full flex items-center gap-3 text-left px-4 py-3 rounded-xl text-xs font-bold text-slate-300 hover:text-[#646cff] hover:bg-slate-900/50 transition-all duration-300 group cursor-pointer"
                   >
-                    <FaCog className="text-slate-500 text-sm" /> Settings
-                  </button>
+                    <span className="text-sm transition-transform duration-300 group-hover:rotate-45">
+                      ⚙️
+                    </span>
+                    <span className="tracking-wide">Settings</span>
+                  </Link>
                 </div>
 
-                <div className="border-t border-slate-800/60 my-1" />
-
-                <div className="p-1.5">
+                {/* dynamic logout action */}
+                <div className="border-t border-slate-800/60 p-2 bg-slate-950/20">
                   <button
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-2.5 text-left text-xs font-semibold text-red-400 px-3 py-2.5 hover:bg-red-500/10 rounded-xl duration-200"
+                    className="w-full flex items-center gap-3 text-left px-4 py-3 rounded-xl text-xs font-black text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 transition-all duration-300 group cursor-pointer"
                   >
-                    <FaSignOutAlt className="text-sm" /> Logout
+                    <svg
+                      className="w-4 h-4 text-rose-400 group-hover:text-rose-300 transition-transform duration-300 group-hover:translate-x-0.5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2.5"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                      />
+                    </svg>
+                    <span className="tracking-widest uppercase">Logout</span>
                   </button>
                 </div>
               </div>
