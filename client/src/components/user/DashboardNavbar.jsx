@@ -251,7 +251,7 @@ const DashboardNavbar = ({ sidebarOpen, setSidebarOpen }) => {
                 <div className="p-2 space-y-1">
                   {/* profile link router */}
                   <Link
-                    to="/dashboard/profile"
+                    to="/user-dashboard/profile"
                     onClick={() => setProfileOpen(false)}
                     className="w-full flex items-center gap-3 text-left px-4 py-3 rounded-xl text-xs font-bold text-slate-300 hover:text-[#646cff] hover:bg-slate-900/50 transition-all duration-300 group cursor-pointer"
                   >
@@ -263,7 +263,7 @@ const DashboardNavbar = ({ sidebarOpen, setSidebarOpen }) => {
 
                   {/* settings link router */}
                   <Link
-                    to="/dashboard/settings"
+                    to="/user-dashboard/settings"
                     onClick={() => setProfileOpen(false)}
                     className="w-full flex items-center gap-3 text-left px-4 py-3 rounded-xl text-xs font-bold text-slate-300 hover:text-[#646cff] hover:bg-slate-900/50 transition-all duration-300 group cursor-pointer"
                   >

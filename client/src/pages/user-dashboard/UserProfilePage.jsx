@@ -1,11 +1,11 @@
-import React from 'react';
+import UserProfileCard from '../../components/user_dashboard/UserProfileCard';
 
 const UserProfilePage = () => {
-    return (
-        <div>
-            User Profile Page
-        </div>
-    );
+  return (
+    <div>
+      <UserProfileCard />
+    </div>
+  );
 };
 
 export default UserProfilePage;
