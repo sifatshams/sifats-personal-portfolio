@@ -1,8 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
-import { FaBars, FaBell, FaChevronDown, FaSearch } from 'react-icons/fa';
+import {
+  FaBars,
+  FaBell,
+  FaChevronDown,
+  FaCog,
+  FaSearch,
+  FaSignOutAlt,
+  FaUser,
+} from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import useAuthStore from '../../store/authStore';
 
 const DashboardNavbar = ({ sidebarOpen, setSidebarOpen }) => {
+  const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -10,10 +21,8 @@ const DashboardNavbar = ({ sidebarOpen, setSidebarOpen }) => {
   const notificationRef = useRef(null);
   const profileRef = useRef(null);
 
-  // fetch logged-in user context
-  const { user } = useAuthStore();
+  const { user, logout } = useAuthStore();
 
-  // click outside handler to close dropdown menus
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -31,196 +40,197 @@ const DashboardNavbar = ({ sidebarOpen, setSidebarOpen }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // format system current date
+  const handleLogout = () => {
+    logout();
+    toast.success('Logged out successfully!');
+    navigate('/login');
+  };
+
   const today = new Date().toLocaleDateString('en-US', {
-    weekday: 'long',
-    month: 'long',
+    weekday: 'short',
+    month: 'short',
     day: 'numeric',
     year: 'numeric',
   });
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-800 bg-[#0d1117]/90 backdrop-blur-xl shadow-lg shadow-black/20">
-      <div className="flex items-center justify-between px-5 lg:px-8 py-4">
-        {/* left segment - mobile bars and title stack */}
+    <header className="sticky top-0 z-40 w-full border-b border-slate-800/60 bg-[#0a0a0c]/80 backdrop-blur-md shadow-md shadow-black/10">
+      <div className="flex items-center justify-between px-5 lg:px-8 py-3.5">
+        {/* Left Segment */}
         <div className="flex items-center gap-4">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="lg:hidden h-11 w-11 rounded-xl border border-slate-700 bg-slate-900 flex items-center justify-center hover:border-[#646cff] duration-300"
+            className="lg:hidden h-10 w-10 rounded-xl border border-slate-800 bg-slate-900/60 flex items-center justify-center hover:border-[#646cff] text-slate-400 hover:text-white duration-300"
           >
-            <FaBars />
+            <FaBars className="text-sm" />
           </button>
 
           <div>
-            <h2 className="text-2xl font-bold tracking-wide">Dashboard</h2>
-            <div className="flex items-center gap-2 text-sm mt-1">
-              <span className="text-slate-500">Home</span>
+            <h2 className="text-lg font-bold tracking-tight text-white">
+              Dashboard
+            </h2>
+            <div className="flex items-center gap-1.5 text-[11px] font-medium mt-0.5">
+              <span
+                className="text-slate-500 hover:text-slate-400 cursor-pointer"
+                onClick={() => navigate('/')}
+              >
+                Home
+              </span>
               <span className="text-slate-600">/</span>
-              <span className="text-[#646cff]">Dashboard</span>
+              <span className="text-[#646cff]">Overview</span>
             </div>
           </div>
         </div>
 
-        {/* right segment - search input, notifications, user avatar */}
+        {/* Right Segment */}
         <div className="flex items-center gap-4">
-          <div className="hidden xl:block text-right">
-            <p className="text-xs text-slate-500 uppercase tracking-widest">
+          {/* System Date */}
+          <div className="hidden xl:block text-right border-r border-slate-800/80 pr-4">
+            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
               Today
             </p>
-            <h4 className="font-semibold text-sm mt-1">{today}</h4>
+            <h4 className="font-semibold text-xs text-slate-300 mt-0.5">
+              {today}
+            </h4>
           </div>
 
-          <div className="hidden md:flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-900 px-4 py-3 w-[320px] transition-all duration-300 focus-within:border-[#646cff]">
-            <FaSearch className="text-slate-500" />
+          {/* Modern Omnibar Search */}
+          <div className="hidden md:flex items-center gap-2.5 rounded-xl border border-slate-800/80 bg-slate-900/40 px-3.5 py-2 w-[260px] transition-all duration-300 focus-within:border-[#646cff]/70 focus-within:bg-slate-900/80">
+            <FaSearch className="text-slate-500 text-xs" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search..."
-              className="w-full bg-transparent outline-none text-sm placeholder:text-slate-500"
+              placeholder="Quick search..."
+              className="w-full bg-transparent outline-none text-xs text-slate-200 placeholder:text-slate-500"
             />
           </div>
 
-          {/* alerts alert system wrapper */}
+          {/* Alerts Systems */}
           <div ref={notificationRef} className="relative">
             <button
               onClick={() => setNotificationOpen(!notificationOpen)}
-              className="relative h-11 w-11 rounded-xl border border-slate-800 bg-slate-900 flex items-center justify-center hover:border-[#646cff] duration-300"
+              className="relative h-10 w-10 cursor-pointer rounded-xl border border-slate-800/80 bg-slate-900/40 flex items-center justify-center text-slate-400 hover:text-white hover:border-slate-700 duration-300"
             >
-              <FaBell />
-              <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-500" />
+              <FaBell className="text-sm" />
+              <span className="absolute top-2.5 right-2.5 h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse" />
             </button>
 
             {notificationOpen && (
-              <div className="absolute right-0 mt-3 w-[360px] rounded-2xl border border-slate-800 bg-[#111827] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-                <div className="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
-                  <h3 className="font-semibold text-lg">Notifications</h3>
-                  <button className="text-sm text-[#646cff] hover:underline">
-                    Mark all as read
+              <div className="absolute right-0 mt-3 w-80 rounded-2xl border border-slate-850 bg-[#0f0f12] shadow-2xl border-slate-800/80 overflow-hidden animate-in fade-in zoom-in-95 duration-200 z-50">
+                <div className="px-4 py-3 border-b border-slate-800/60 flex items-center justify-between bg-slate-900/20">
+                  <h3 className="font-semibold text-sm text-slate-200">
+                    Notifications
+                  </h3>
+                  <button className="text-xs text-[#646cff] font-medium hover:underline">
+                    Clear all
                   </button>
                 </div>
 
-                <div className="max-h-[350px] overflow-y-auto">
+                <div className="max-h-[280px] overflow-y-auto divided-y divide-slate-800">
                   {[
                     {
-                      title: 'New Contact Message',
-                      text: 'John sent you a new message.',
-                      time: '2 min ago',
+                      title: 'Project Approval',
+                      text: 'Your application has been deployed.',
+                      time: '5m ago',
                     },
                     {
-                      title: 'Project Updated',
-                      text: 'Portfolio project has been updated.',
-                      time: '25 min ago',
-                    },
-                    {
-                      title: 'New Login',
-                      text: 'Login detected from Chrome.',
-                      time: '1 hour ago',
-                    },
-                    {
-                      title: 'Server Status',
-                      text: 'Everything is running smoothly.',
-                      time: 'Today',
+                      title: 'Security Alert',
+                      text: 'Profile password updated successfully.',
+                      time: '2h ago',
                     },
                   ].map((item, index) => (
                     <div
                       key={index}
-                      className="px-5 py-4 border-b border-slate-800 hover:bg-slate-800/40 cursor-pointer duration-300"
+                      className="px-4 py-3 border-b border-slate-800/40 hover:bg-slate-900/40 cursor-pointer duration-300"
                     >
-                      <h4 className="font-semibold">{item.title}</h4>
-                      <p className="text-sm text-slate-400 mt-1">{item.text}</p>
-                      <span className="text-xs text-slate-500 mt-2 inline-block">
+                      <h4 className="font-medium text-xs text-slate-300">
+                        {item.title}
+                      </h4>
+                      <p className="text-[11px] text-slate-500 mt-0.5">
+                        {item.text}
+                      </p>
+                      <span className="text-[9px] text-slate-600 mt-1 block font-medium">
                         {item.time}
                       </span>
                     </div>
                   ))}
                 </div>
-
-                <div className="p-4 text-center">
-                  <button className="text-[#646cff] hover:underline text-sm">
-                    View All Notifications
-                  </button>
-                </div>
               </div>
             )}
           </div>
 
-          {/* target profile toggle node */}
+          {/* Profile Dropdown Component */}
           <div ref={profileRef} className="relative">
             <button
               onClick={() => setProfileOpen(!profileOpen)}
-              className="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 hover:border-[#646cff] duration-300"
+              className="flex items-center gap-2.5 cursor-pointer rounded-xl border border-slate-800/80 bg-slate-900/40 p-1.5 pr-3 hover:border-slate-700 duration-300 select-none"
             >
-              {/* dynamic avatar engine wrapper */}
               {user?.profileImage?.url ? (
                 <img
                   src={user.profileImage.url}
                   alt={user?.name || 'User'}
-                  className="h-10 w-10 rounded-full border border-[#646cff] object-cover"
+                  className="h-7 w-7 rounded-lg border border-[#646cff]/40 object-cover"
                 />
               ) : (
-                <div className="h-10 w-10 rounded-full bg-[#646cff] flex items-center justify-center text-white font-bold text-sm border border-[#646cff]">
+                <div className="h-7 w-7 rounded-lg bg-[#646cff] flex items-center justify-center text-white font-bold text-xs">
                   {user?.name?.charAt(0).toUpperCase() || 'U'}
                 </div>
               )}
 
               <div className="hidden md:block text-left">
-                <h4 className="font-semibold">
-                  {user?.name || 'Nicolas Jackson'}
+                <h4 className="font-semibold text-xs text-slate-300 leading-none">
+                  {user?.name || 'Sifat Coder'}
                 </h4>
-                <p className="text-xs text-slate-400 capitalize">
-                  {user?.role || 'User'}
-                </p>
               </div>
 
               <FaChevronDown
-                className={`hidden md:block text-sm text-slate-400 transition-transform ${profileOpen ? 'rotate-180' : ''}`}
+                className={`hidden md:block text-[10px] text-slate-500 transition-transform duration-300 ${profileOpen ? 'rotate-180 text-slate-300' : ''}`}
               />
             </button>
 
             {profileOpen && (
-              <div className="absolute right-0 mt-3 w-72 rounded-2xl border border-slate-800 bg-[#111827] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-                <div className="p-5 border-b border-slate-800">
-                  <div className="flex items-center gap-4">
-                    {user?.profileImage?.url ? (
-                      <img
-                        src={user.profileImage.url}
-                        alt="Profile"
-                        className="w-14 h-14 rounded-full border-2 border-[#646cff] object-cover"
-                      />
-                    ) : (
-                      <div className="w-14 h-14 rounded-full bg-[#646cff] border-2 border-[#646cff] flex items-center justify-center text-white font-bold text-lg">
-                        {user?.name?.charAt(0).toUpperCase() || 'U'}
-                      </div>
-                    )}
-
-                    <div>
-                      <h3 className="font-bold">
-                        {user?.name || 'Nicolas Jackson'}
-                      </h3>
-                      <p className="text-sm text-slate-400 truncate max-w-[160px]">
-                        {user?.email || 'user@gmail.com'}
-                      </p>
-                    </div>
-                  </div>
+              <div className="absolute right-0 mt-3 w-64 rounded-2xl border border-slate-850 bg-[#0f0f12] shadow-2xl overflow-hidden border-slate-800/80 animate-in fade-in zoom-in-95 duration-200 z-50">
+                <div className="p-4 border-b border-slate-800/60 bg-slate-900/20">
+                  <h3 className="font-bold text-xs text-slate-200 truncate">
+                    {user?.name || 'Sifat Bin Anwar'}
+                  </h3>
+                  <p className="text-[11px] text-slate-500 truncate mt-0.5">
+                    {user?.email || 'sifat@example.com'}
+                  </p>
                 </div>
 
-                <div className="py-2">
-                  <button className="w-full text-left px-5 py-3 hover:bg-slate-800 duration-300">
-                    👤 My Profile
+                <div className="p-1.5 space-y-0.5">
+                  <button
+                    onClick={() => {
+                      setProfileOpen(false);
+                      navigate('/dashboard/profile');
+                    }}
+                    className="w-full flex items-center gap-2.5 text-left text-xs font-medium text-slate-400 px-3 py-2.5 hover:bg-slate-900 hover:text-white rounded-xl duration-200"
+                  >
+                    <FaUser className="text-slate-500 text-sm" /> My Profile
                   </button>
-                  <button className="w-full text-left px-5 py-3 hover:bg-slate-800 duration-300">
-                    ⚙ Settings
-                  </button>
-                  <button className="w-full text-left px-5 py-3 hover:bg-slate-800 duration-300">
-                    🌙 Dark Mode
+                  <button
+                    onClick={() => {
+                      setProfileOpen(false);
+                      navigate('/dashboard/settings');
+                    }}
+                    className="w-full flex items-center gap-2.5 text-left text-xs font-medium text-slate-400 px-3 py-2.5 hover:bg-slate-900 hover:text-white rounded-xl duration-200"
+                  >
+                    <FaCog className="text-slate-500 text-sm" /> Settings
                   </button>
                 </div>
 
-                <div className="border-t border-slate-800" />
-                <button className="w-full text-left px-5 py-4 text-red-400 hover:bg-red-500/10 duration-300">
-                  Logout
-                </button>
+                <div className="border-t border-slate-800/60 my-1" />
+
+                <div className="p-1.5">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-2.5 text-left text-xs font-semibold text-red-400 px-3 py-2.5 hover:bg-red-500/10 rounded-xl duration-200"
+                  >
+                    <FaSignOutAlt className="text-sm" /> Logout
+                  </button>
+                </div>
               </div>
             )}
           </div>
