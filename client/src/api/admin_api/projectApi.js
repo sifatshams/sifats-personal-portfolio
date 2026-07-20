@@ -14,7 +14,7 @@ export const getProject = async (id) => {
   return data;
 };
 
-// create project
+// create projects
 export const createProject = async (projectData) => {
   const { data } = await axios_instance.post('/admin/projects', projectData);
   return data;
