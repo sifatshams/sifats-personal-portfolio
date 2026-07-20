@@ -237,7 +237,7 @@ const RegisterPage = () => {
                   <button
                     type="button"
                     onClick={() => setShowPass(!showPass)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-[#646cff] transition-colors duration-300"
+                    className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-[#646cff] transition-colors duration-300"
                   >
                     {showPass ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
                   </button>
