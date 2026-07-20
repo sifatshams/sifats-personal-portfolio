@@ -8,14 +8,16 @@ export const transporter = nodemailer.createTransport({
     user: process.env.BREVO_USER,
     pass: process.env.BREVO_PASS,
   },
-  family: 4, // ipv4 force
-  connectionTimeout: 10000, // 10 second timeout (optional safety)
+  family: 4, // IPv4 force
+  connectionTimeout: 15000, // 15 second wait
+  greetingTimeout: 15000,
+  socketTimeout: 15000,
 });
 
 transporter.verify((error, success) => {
   if (error) {
-    console.log(error);
+    console.log('SMTP verify error:', error);
   } else {
-    console.log('SMTP connected successfully!');
+    console.log('SMTP connected successfully');
   }
 });
