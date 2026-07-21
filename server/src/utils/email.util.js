@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { transporter } from '../config/transporter.js';
+import { sendBrevoEmail } from '../config/transporter.js';
 
 // @ts-ignore
 export const sendVerificationEmail = async (
@@ -251,7 +251,12 @@ Secure • Reliable • Future Ready
 `,
   };
 
-  await transporter.sendMail(mailOptions);
+  await sendBrevoEmail({
+    to: toEmail,
+    subject: '📩 Verify Your Email • Sifat Tech',
+    html: mailOptions.html,
+    senderName: 'Sifat Tech',
+  });
 };
 
 // send otp email
@@ -421,5 +426,10 @@ export const sendOtpEmail = async (toEmail, userName, otp) => {
 `,
   };
 
-  await transporter.sendMail(mailOptions);
+  await sendBrevoEmail({
+    to: toEmail,
+    subject: 'Your Password Reset OTP • Sifat Tech',
+    html: mailOptions.html,
+    senderName: 'Inventory APP Security',
+  });
 };

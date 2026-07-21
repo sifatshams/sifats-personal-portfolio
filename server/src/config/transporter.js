@@ -1,23 +1,30 @@
-import nodemailer from 'nodemailer';
+import axios from 'axios';
 
-export const transporter = nodemailer.createTransport({
-  host: process.env.BREVO_HOST,
-  port: Number(process.env.BREVO_PORT),
-  secure: true,
-  auth: {
-    user: process.env.BREVO_USER,
-    pass: process.env.BREVO_PASS,
-  },
-  family: 4, // IPv4 force
-  connectionTimeout: 15000, // 15 second wait
-  greetingTimeout: 15000,
-  socketTimeout: 15000,
-});
-
-transporter.verify((error, success) => {
-  if (error) {
-    console.log('SMTP verify error:', error);
-  } else {
-    console.log('SMTP connected successfully');
+export const sendBrevoEmail = async ({ to, subject, html, senderName }) => {
+  try {
+    const response = await axios.post(
+      'https://api.brevo.com/v3/smtp/email',
+      {
+        sender: {
+          name: senderName || 'Sifat Tech',
+          email: process.env.BREVO_SENDER,
+        },
+        to: [{ email: to }],
+        subject: subject,
+        htmlContent: html,
+      },
+      {
+        headers: {
+          'api-key': process.env.BREVO_API_KEY,
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      },
+    );
+    console.log('Email sent successfully:', response.data);
+    return response.data;
+  } catch (error) {
+    console.log('Brevo email error:', error.response?.data || error.message);
+    throw error;
   }
-});
+};
