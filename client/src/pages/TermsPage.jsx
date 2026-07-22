@@ -1,6 +1,16 @@
+import SEO from "../components/SEO";
+
 const TermsPage = () => {
   return (
     <section className="min-h-screen bg-[#0a0a0a] text-white px-6 py-20">
+      {/* title */}
+      <SEO
+        title="Terms & Conditions"
+        description="Read the terms and conditions governing the use of this website, including user responsibilities, limitations, and legal agreements."
+        keywords="terms and conditions, terms of service, user agreement, legal terms"
+        image="/og-terms.png"
+        url="https://sifatcoder.vercel.app/terms"
+      />
       <div className="max-w-[1000px] mx-auto">
         {/* Top */}
         <div className="text-center mb-14">

@@ -4,6 +4,7 @@ import { IoMailOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSendOtpMutation } from '../hooks/auth/useSendOtpMutation';
 import useResetPasswordStore from '../store/resetPasswordStore';
+import SEO from '../components/SEO';
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -31,6 +32,14 @@ const ForgotPassword = () => {
 
   return (
     <div className="relative min-h-screen w-full bg-[#020617] text-white flex items-center justify-center overflow-hidden px-4 selection:bg-[#646cff]/30 selection:text-indigo-200">
+      {/* title */}
+      <SEO
+        title="Forgot Password"
+        description="Reset your account password securely by verifying your email address. Regain access to your account in just a few simple steps."
+        keywords="forgot password, reset password, password recovery, account recovery"
+        image="/og-forgot-password.png"
+        url="https://sifatcoder.vercel.app/forgot-password"
+      />
       {/* Background Glow Effects */}
       <div className="absolute top-10 left-10 w-[400px] h-[400px] bg-[#646cff]/10 blur-[130px] rounded-full animate-pulse duration-[10s]"></div>
       <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-purple-500/5 blur-[130px] rounded-full animate-pulse duration-[8s]"></div>

@@ -59,7 +59,7 @@ const DashboardSidebar = ({
   // logout handler
   const handleLogout = () => {
     logout();
-    toast.success('Logged out successfully!');
+    toast.success('User logged out successfully!');
     navigate('/login');
   };
 

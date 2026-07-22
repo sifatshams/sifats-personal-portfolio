@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FaPaperPlane, FaRobot } from 'react-icons/fa';
 import aiLogo from '../assets/ai-logo.json';
 import { askGemini } from '../lib/gemini';
+import SEO from './SEO';
 
 // lottie
 const Lottie = LottieRaw.default ?? LottieRaw;
@@ -85,6 +86,14 @@ const AiChatSection = () => {
 
   return (
     <section className="px-6 py-24 bg-[#0a0a0a]">
+      {/* title */}
+      <SEO
+        title="AI chat"
+        description="Explore AI-powered chat, features integrated into this portfolio, showcasing practical implementation of artificial intelligence in modern web applications."
+        keywords="AI section, artificial intelligence, AI tools, machine learning demo, AI integration"
+        image="/og-ai-section.png"
+        url="https://sifatcoder.vercel.app/ai-chat"
+      />
       <div className="max-w-[900px] mx-auto">
         {/* HEADER */}
         <div className="text-center mb-10">

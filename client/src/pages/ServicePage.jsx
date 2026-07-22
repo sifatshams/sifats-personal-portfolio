@@ -14,10 +14,19 @@ import {
   FaUsers,
 } from 'react-icons/fa';
 import { RiQuestionFill } from 'react-icons/ri';
+import SEO from '../components/SEO';
 
 const ServicePage = () => {
   return (
     <div className="relative bg-[#0a0a0a] text-white overflow-hidden">
+      {/* title */}
+      <SEO
+        title="Services"
+        description="Explore the range of professional web development services I offer, including full stack development, UI/UX design, and custom solutions."
+        keywords="services, web development services, full stack developer services, hire developer"
+        image="/og-services.png"
+        url="https://sifatcoder.vercel.app/services"
+      />
       {/* Glow */}
       <div className="absolute top-10 left-10 w-72 h-72 bg-[#646cff]/15 blur-[120px] rounded-full"></div>
       <div className="absolute bottom-10 right-10 w-72 h-72 bg-purple-500/10 blur-[120px] rounded-full"></div>

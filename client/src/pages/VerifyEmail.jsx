@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useVerifyEmailMutation } from '../hooks/auth/useVerifyEmailMutation';
+import SEO from '../components/SEO';
 
 const VerifyEmail = () => {
   const { token } = useParams();
@@ -31,6 +32,14 @@ const VerifyEmail = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a] text-white">
+      {/* title */}
+      <SEO
+        title="Verify Your Email"
+        description="Verify your email address to activate your account and gain full access to all features and services."
+        keywords="verify email, email verification, account activation"
+        image="/og-verify-email.png"
+        url="https://sifatcoder.vercel.app/verify-email"
+      />
       <div className="text-center">
         <div className="text-xl mb-2">🔄 Verifying your email...</div>
 

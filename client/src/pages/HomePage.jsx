@@ -19,6 +19,7 @@ import {
 } from 'react-icons/fa';
 import { RiQuestionFill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 // type animation text
 const words = ['Digital Growth', 'AI Solutions', 'Smart Systems'];
@@ -46,6 +47,14 @@ const HomePage = () => {
   }, [char, index]);
   return (
     <div className="bg-[#0a0a0a] mt-15 md:mt-0 text-white overflow-hidden">
+      {/* title */}
+      <SEO
+        title="Home Page"
+        description="I am a Full Stack Developer specializing in React, Node.js"
+        keywords="portfolio, react developer, sifat web, sifat coder ,web developer"
+        image="/og-home.png"
+        url="https://sifatcoder.vercel.app/"
+      />
       {/* FLOATING GLOWS */}
       <motion.div
         animate={{ y: [0, -20, 0] }}

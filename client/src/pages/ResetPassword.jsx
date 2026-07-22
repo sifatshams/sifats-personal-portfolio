@@ -8,6 +8,7 @@ import {
   IoShieldCheckmarkOutline,
 } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { useResetPasswordMutation } from '../hooks/auth/useResetPasswordMutation';
 import useResetPasswordStore from '../store/resetPasswordStore';
 
@@ -62,6 +63,14 @@ const ResetPassword = () => {
 
   return (
     <div className="min-h-screen bg-[#020617] flex items-center justify-center px-4 py-12 relative overflow-hidden selection:bg-[#646cff]/30 selection:text-indigo-200">
+      {/* title */}
+      <SEO
+        title="Reset Password"
+        description="Set a new password for your account securely. Choose a strong password to keep your account safe and continue accessing all features."
+        keywords="reset password, set new password, change password, account security"
+        image="/og-reset-password.png"
+        url="https://sifatcoder.vercel.app/reset-password"
+      />
       {/* Glow */}
       <div className="absolute w-[600px] h-[600px] bg-gradient-to-tr from-[#646cff]/10 via-purple-500/5 to-transparent blur-[150px] rounded-full -top-40 -left-20 animate-pulse duration-[10s]" />
       <div className="absolute w-[500px] h-[500px] bg-gradient-to-br from-blue-500/10 via-fuchsia-500/5 to-transparent blur-[150px] rounded-full -bottom-20 -right-20 animate-pulse duration-[8s]" />

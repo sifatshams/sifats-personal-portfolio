@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const VerifyEmailNotice = () => {
   const location = useLocation();
@@ -15,6 +16,14 @@ const VerifyEmailNotice = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a] text-white px-4">
+      {/* title */}
+      <SEO
+        title="Check Your Inbox"
+        description="A verification link has been sent to your email address. Please check your inbox to complete the verification process."
+        keywords="email sent, verification notice, check inbox, confirm email"
+        image="/og-verify-notice.png"
+        url="https://sifatcoder.vercel.app/verify-email-notice"
+      />
       <div className="max-w-md w-full text-center bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl">
         <h1 className="text-2xl font-bold mb-4">Registration Successful!</h1>
 

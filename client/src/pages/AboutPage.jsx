@@ -15,10 +15,18 @@ import {
 import { MdAdminPanelSettings } from 'react-icons/md';
 import { RiQuestionFill } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const AboutPage = () => {
   return (
     <div className="bg-[#0a0a0a] text-white overflow-hidden">
+      {/* title */}
+      <SEO
+        title="About me"
+        keywords="sifat coder about page"
+        image="/og-home.png"
+        url="https://sifatcoder.vercel.app/"
+      />
       {/* HERO SECTION */}
       <section className="relative min-h-[75vh] md:mt-20 xl:mt-0 flex items-center px-6">
         {/* Glow */}

@@ -37,9 +37,17 @@ const Header = () => {
   };
 
   const handleLogout = () => {
+    // save role before logout clears the user state
+    const isAdmin = user?.role === 'admin';
+
     logout();
-    // success msg
-    toast.success('User logged out successfully!');
+
+    // success msg based on role
+    if (isAdmin) {
+      toast.success('Admin logged out successfully!');
+    } else {
+      toast.success('User logged out successfully!');
+    }
 
     // close dropdown
     setDropdown(false);

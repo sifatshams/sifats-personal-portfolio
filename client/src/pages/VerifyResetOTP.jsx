@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSendOtpMutation } from '../hooks/auth/useSendOtpMutation';
 import { useVerifyOtpMutation } from '../hooks/auth/useVerifyOtpMutation';
 import useResetPasswordStore from '../store/resetPasswordStore';
+import SEO from '../components/SEO';
 
 const VerifyResetOTP = () => {
   const navigate = useNavigate();
@@ -205,6 +206,14 @@ const VerifyResetOTP = () => {
 
   return (
     <div className="min-h-screen bg-[#050816] flex items-center justify-center px-4 overflow-hidden">
+      {/* title */}
+      <SEO
+        title="Verify OTP"
+        description="Enter the OTP code sent to your email or phone number to securely verify your identity and proceed with password reset."
+        keywords="verify OTP, OTP verification, password reset code, security code"
+        image="/og-verify-otp.png"
+        url="https://sifatcoder.vercel.app/verify-reset-otp"
+      />
       {/* Background Glow */}
       <div className="absolute w-[300px] h-[300px] bg-indigo-600/20 blur-[120px] rounded-full top-20 left-10" />
 

@@ -5,6 +5,7 @@ import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../hooks/auth/useLoginMutation';
 import useAuthStore from '../store/authStore';
+import SEO from '../components/SEO';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -45,6 +46,14 @@ const LoginPage = () => {
 
   return (
     <div className="relative min-h-screen w-full bg-[#020617] text-white overflow-hidden px-4 py-16 md:px-6 selection:bg-[#646cff]/30 selection:text-indigo-200">
+      {/* title */}
+      <SEO
+        title="Login"
+        description="Login to your account to access your dashboard, manage your projects, and explore exclusive features on my portfolio platform."
+        keywords="login, sign in, user login, portfolio login, account access"
+        image="/og-login.png"
+        url="https://sifatcoder.vercel.app/login"
+      />
       {/* Glow Effects */}
       <div className="absolute top-10 left-10 w-[500px] h-[500px] bg-[#646cff]/10 blur-[130px] rounded-full animate-pulse duration-[10s]"></div>
       <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-purple-500/5 blur-[130px] rounded-full animate-pulse duration-[8s]"></div>

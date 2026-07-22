@@ -12,6 +12,7 @@ import {
 } from 'react-icons/fa';
 import { IoLockClosedOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { useRegisterMutation } from '../hooks/auth/useRegisterMutation';
 
 const RegisterPage = () => {
@@ -60,6 +61,14 @@ const RegisterPage = () => {
 
   return (
     <section className="relative min-h-screen w-full bg-[#020617] text-white overflow-hidden px-4 py-16 md:px-6 selection:bg-[#646cff]/30 selection:text-indigo-200">
+      {/* title */}
+      <SEO
+        title="Register"
+        description="Create a free account to unlock personalized features, save your progress, and get access to exclusive tools and content."
+        keywords="register, sign up, create account, new user registration"
+        image="/og-register.png"
+        url="https://sifatcoder.vercel.app/register"
+      />
       {/* Background Glow Effects */}
       <div className="absolute top-10 left-10 w-[500px] h-[500px] bg-[#646cff]/10 blur-[130px] rounded-full animate-pulse duration-[10s]"></div>
       <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-purple-500/5 blur-[130px] rounded-full animate-pulse duration-[8s]"></div>

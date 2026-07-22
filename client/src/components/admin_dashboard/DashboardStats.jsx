@@ -1,4 +1,5 @@
 import { FaEnvelope, FaEye, FaFolderOpen, FaUsers } from 'react-icons/fa';
+import SEO from '../SEO';
 
 const DashboardStats = ({ stats }) => {
   const cards = [
@@ -38,6 +39,14 @@ const DashboardStats = ({ stats }) => {
 
   return (
     <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
+      {/* seo tags */}
+      <SEO
+        title="Admin Dashboard"
+        description="Manage users, monitor activity, review messages, and control overall platform settings from the admin dashboard."
+        keywords="admin dashboard, admin panel, manage users, platform control, admin control panel"
+        image="/og-admin-dashboard.png"
+        url="https://sifatcoder.vercel.app/admin-dashboard"
+      />
       {cards.map((item) => (
         <div
           key={item.id}

@@ -1,11 +1,19 @@
+import SEO from "../components/SEO";
+
 const PrivacyPolicy = () => {
   return (
     <section className="min-h-screen bg-[#0a0a0a] text-white px-6 py-20">
+      {/* title */}
+      <SEO
+        title="Privacy Policy"
+        description="Read our privacy policy to understand how your personal information and data are collected, used, and protected on this platform."
+        keywords="privacy policy, data protection, user privacy, terms of data usage"
+        image="/og-privacy.png"
+        url="https://sifatcoder.vercel.app/privacy-policy"
+      />
       <div className="max-w-[1000px] mx-auto">
-
         {/* Top */}
         <div className="text-center mb-14">
-
           <div className="inline-flex px-4 py-2 rounded-full bg-slate-900 border border-slate-800 text-sm text-slate-300 mb-5">
             Privacy & Security
           </div>
@@ -16,15 +24,13 @@ const PrivacyPolicy = () => {
           </h1>
 
           <p className="text-slate-400 mt-5 max-w-[700px] mx-auto leading-8">
-            Your privacy matters to us. This policy explains
-            how SifatTech collects, uses and protects your
-            information.
+            Your privacy matters to us. This policy explains how SifatTech
+            collects, uses and protects your information.
           </p>
         </div>
 
         {/* Content Card */}
         <div className="bg-slate-900/60 border border-slate-800 rounded-[35px] p-8 md:p-12 backdrop-blur-xl space-y-10">
-
           {/* Section */}
           <div>
             <h2 className="text-2xl font-semibold mb-4">
@@ -32,9 +38,9 @@ const PrivacyPolicy = () => {
             </h2>
 
             <p className="text-slate-400 leading-8">
-              We may collect personal information such as
-              your name, email address and messages submitted
-              through our contact forms or communication channels.
+              We may collect personal information such as your name, email
+              address and messages submitted through our contact forms or
+              communication channels.
             </p>
           </div>
 
@@ -44,21 +50,18 @@ const PrivacyPolicy = () => {
             </h2>
 
             <p className="text-slate-400 leading-8">
-              Information is used only to improve communication,
-              provide services, respond to inquiries and enhance
-              user experience.
+              Information is used only to improve communication, provide
+              services, respond to inquiries and enhance user experience.
             </p>
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
-              3. Data Protection
-            </h2>
+            <h2 className="text-2xl font-semibold mb-4">3. Data Protection</h2>
 
             <p className="text-slate-400 leading-8">
-              We take appropriate technical and organizational
-              measures to protect your information from
-              unauthorized access, disclosure or misuse.
+              We take appropriate technical and organizational measures to
+              protect your information from unauthorized access, disclosure or
+              misuse.
             </p>
           </div>
 
@@ -68,21 +71,17 @@ const PrivacyPolicy = () => {
             </h2>
 
             <p className="text-slate-400 leading-8">
-              Our website may use trusted third-party tools
-              or services. These providers may have their own
-              privacy practices and policies.
+              Our website may use trusted third-party tools or services. These
+              providers may have their own privacy practices and policies.
             </p>
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
-              5. Policy Updates
-            </h2>
+            <h2 className="text-2xl font-semibold mb-4">5. Policy Updates</h2>
 
             <p className="text-slate-400 leading-8">
-              We may update this privacy policy periodically.
-              Changes will be reflected on this page with the
-              latest revision date.
+              We may update this privacy policy periodically. Changes will be
+              reflected on this page with the latest revision date.
             </p>
           </div>
 
@@ -92,7 +91,6 @@ const PrivacyPolicy = () => {
               Last Updated: {new Date().getFullYear()}
             </p>
           </div>
-
         </div>
       </div>
     </section>

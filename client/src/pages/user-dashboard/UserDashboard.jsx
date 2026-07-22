@@ -1,3 +1,4 @@
+import SEO from '../../components/SEO';
 import ProfileProgressCard from '../../components/user_dashboard/ProfileProgressCard';
 import RecentTasks from '../../components/user_dashboard/RecentTasks';
 import TaskDistributionChart from '../../components/user_dashboard/TaskDistributionChart';
@@ -9,6 +10,14 @@ import UserQuickActions from '../../components/user_dashboard/UserQuickActions';
 const UserDashboard = () => {
   return (
     <div className="space-y-8">
+      {/* seo tags */}
+      <SEO
+        title="User Dashboard"
+        description="View your account overview, manage your profile, track your activity, and access all your personalized features from your dashboard."
+        keywords="user dashboard, my account, profile overview, dashboard, account management"
+        image="/og-user-dashboard.png"
+        url="https://sifatcoder.vercel.app/user-dashboard"
+      />
       {/* User Task & Project Stats Counters */}
       <UserDashboardStats />
 
