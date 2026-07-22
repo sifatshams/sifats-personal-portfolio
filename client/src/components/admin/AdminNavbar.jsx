@@ -6,7 +6,7 @@ import {
   FaChevronDown as FaChevronDownIcon,
   FaSearch as FaSearchIcon,
 } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import useAuthStore from '../../store/authStore';
 
@@ -14,6 +14,8 @@ const AdminNavbar = ({ sidebarOpen, setSidebarOpen }) => {
   const [search, setSearch] = useState('');
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const notificationRef = useRef(null);
   const profileRef = useRef(null);

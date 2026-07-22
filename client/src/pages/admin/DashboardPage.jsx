@@ -11,8 +11,6 @@ import { useDashboardQuery } from '../../hooks/admin/useDashboardQuery';
 const DashboardPage = () => {
   const { data, isLoading, isError, error } = useDashboardQuery();
 
-  console.log(data);
-
   /**
    * API support
    *

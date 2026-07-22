@@ -12,7 +12,7 @@ const MyTasksPage = () => {
   const [statusFilter, setStatusFilter] = useState('All');
   const [viewMode, setViewMode] = useState('grid'); // grid or list
 
-  // API কল করার পূর্ব পর্যন্ত রিঅ্যাক্ট স্টেটকে সচল রাখার ডামি ডাটা
+  // API 
   const dummyTasks = [
     {
       _id: '1',
@@ -48,12 +48,9 @@ const MyTasksPage = () => {
     },
   ];
 
-  // API থেকে ডাটা না আসলে ফলব্যাক ডামি ডাটা ধরবে
-  // const { data } = useMyTasksQuery();
-  // const tasks = data?.data || dummyTasks;
   const tasks = dummyTasks;
 
-  // সার্চ এবং ফিল্টারিং লজিক (যা ডাটা আসার সাথে সাথে ডাইনামিকালি কাজ করবে)
+  // search and filtering logic
   const filteredTasks = tasks.filter((task) => {
     const matchesSearch =
       task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
