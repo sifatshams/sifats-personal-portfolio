@@ -2,9 +2,9 @@
 import { useForm } from 'react-hook-form';
 import { FaArrowRight, FaEnvelope, FaHeadset, FaSpinner } from 'react-icons/fa';
 import { HiOutlineShieldExclamation } from 'react-icons/hi2';
+import SEO from '../components/SEO';
 import { useContactMutation } from '../hooks/auth/userContactMutation';
 import useAuthStore from '../store/authStore';
-import SEO from '../components/SEO';
 
 const ContactPage = () => {
   // get user details from my auth store
@@ -41,9 +41,16 @@ const ContactPage = () => {
   if (isAdmin) {
     return (
       <section className="relative min-h-screen overflow-hidden bg-[#020617] text-white flex items-center justify-center px-6 selection:bg-[#646cff]/30 selection:text-indigo-200">
+        // seo tags
+        <SEO
+          title="Contact Me"
+          description="Get in touch with me for collaborations, project inquiries, freelance work, or just to say hello. Let's build something great together."
+          keywords="contact, hire developer, get in touch, collaboration, freelance developer"
+          image="/og-contact.png"
+          url="https://sifatcoder.vercel.app/contact"
+        />
         {/* background glow effects */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[450px] w-[450px] rounded-full bg-[#646cff]/10 blur-[130px]" />
-
         <div className="relative z-10 w-full max-w-[500px] text-center bg-[#0b1120]/90 backdrop-blur-xl border border-slate-800 rounded-[2.5rem] p-8 md:p-10 shadow-[0_0_40px_rgba(99,102,241,0.15)]">
           <div className="relative w-16 h-16 mx-auto mb-6">
             <div className="absolute inset-0 bg-[#646cff]/20 blur-xl rounded-full animate-pulse" />
