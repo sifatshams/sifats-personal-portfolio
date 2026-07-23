@@ -14,28 +14,30 @@ const UserProfileCard = () => {
   const { user } = useAuthStore();
   const [isEditing, setIsEditing] = useState(false);
 
+  const formattedJoinedDate = user?.createdAt
+    ? new Date(user.createdAt).toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric',
+      })
+    : 'N/A';
+
   const profileData = {
-    name: user?.name || 'Sifat Bin Anwar',
-    email: user?.email || 'sifat.coder@gmail.com',
-    role: user?.role || 'Frontend Developer',
-    joinedDate: user?.createdAt
-      ? new Date(user.createdAt).toLocaleDateString()
-      : 'April 2026',
-    bio:
-      user?.bio ||
-      'Passionate web developer working with React, Vite, and Tailwind CSS to build clean user interfaces.',
-    rank: user?.rank || 'Level 2 Contributor',
+    name: user?.name || 'User',
+    email: user?.email || 'No email set',
+    role: user?.role || 'Member',
+    joinedDate: formattedJoinedDate,
+    bio: user?.bio || 'No bio added yet.',
+    rank: user?.rank || 'Contributor',
+    is2FAEnabled: user?.is2FAEnabled || false,
   };
 
   return (
     <div className="space-y-6">
       {/* 1. Profile Hero Card */}
       <div className="relative rounded-2xl border border-slate-800/80 bg-[#0b1120]/60 p-6 md:p-8 overflow-hidden shadow-xl">
-        {/* Background glow effects */}
         <div className="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-[#646cff]/10 rounded-full blur-3xl" />
 
         <div className="flex flex-col md:flex-row items-center gap-6 relative z-10">
-          {/* Avatar Area with Hover Effect */}
           <div className="relative group cursor-pointer">
             <div className="p-[3px] rounded-2xl bg-gradient-to-tr from-[#646cff] to-purple-600 shadow-xl shadow-[#646cff]/5">
               {user?.profileImage?.url ? (
@@ -50,13 +52,11 @@ const UserProfileCard = () => {
                 </div>
               )}
             </div>
-            {/* Camera Overlay Icon */}
             <div className="absolute inset-0 bg-black/60 rounded-[16px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-[#646cff]/50 m-[3px]">
               <FaCamera className="text-white text-lg" />
             </div>
           </div>
 
-          {/* User Meta Info */}
           <div className="text-center md:text-left space-y-2 flex-1">
             <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
               <h2 className="text-xl md:text-2xl font-black text-white tracking-wide">
@@ -74,7 +74,6 @@ const UserProfileCard = () => {
             </p>
           </div>
 
-          {/* Edit Profile Button */}
           <button
             onClick={() => setIsEditing(!isEditing)}
             className="flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-slate-200 bg-slate-900 border border-slate-800 rounded-xl hover:text-[#646cff] hover:border-[#646cff]/40 transition-all duration-300 cursor-pointer active:scale-95"
@@ -86,7 +85,6 @@ const UserProfileCard = () => {
 
       {/* 2. Detailed Info Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Left Side: Account Details */}
         <div className="md:col-span-2 p-6 rounded-2xl border border-slate-800/80 bg-[#0b1120]/40 space-y-6">
           <h3 className="font-bold text-sm text-white tracking-wide border-b border-slate-800/60 pb-3">
             Account Information
@@ -141,9 +139,7 @@ const UserProfileCard = () => {
               <div className="flex items-center justify-between p-3 bg-slate-950/50 border border-slate-900 rounded-xl">
                 <div>
                   <h4 className="text-xs font-bold text-slate-300">Password</h4>
-                  <p className="text-[10px] text-slate-500 mt-0.5">
-                    Last changed 2 months ago
-                  </p>
+                  <p className="text-[10px] text-slate-500 mt-0.5">Protected</p>
                 </div>
                 <button className="text-[11px] font-black text-[#646cff] hover:underline cursor-pointer">
                   Update
@@ -155,12 +151,18 @@ const UserProfileCard = () => {
                   <h4 className="text-xs font-bold text-slate-300">
                     2FA Authentication
                   </h4>
-                  <p className="text-[10px] text-rose-400/80 font-bold mt-0.5">
-                    Not Enabled
+                  <p
+                    className={`text-[10px] font-bold mt-0.5 ${
+                      profileData.is2FAEnabled
+                        ? 'text-emerald-400'
+                        : 'text-rose-400/80'
+                    }`}
+                  >
+                    {profileData.is2FAEnabled ? 'Enabled' : 'Not Enabled'}
                   </p>
                 </div>
                 <button className="text-[11px] font-black text-emerald-400 hover:underline cursor-pointer">
-                  Setup
+                  {profileData.is2FAEnabled ? 'Manage' : 'Setup'}
                 </button>
               </div>
             </div>

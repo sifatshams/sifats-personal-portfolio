@@ -2,63 +2,29 @@
 import { useState } from 'react';
 import { FaFilter, FaList, FaPlus, FaSearch, FaThLarge } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-
-// যদি আপনার কোনো কাস্টম কোয়েরি হুক থাকে (যেমন: useMyTasksQuery), পরে এখানে ইমপোর্ট করতে পারবেন
-// import { useMyTasksQuery } from '../../hooks/user/useMyTasksQuery';
+import { useMyTasksQuery } from '../../hooks/user/useTaskQuery';
 
 const MyTasksPage = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
-  const [viewMode, setViewMode] = useState('grid'); // grid or list
+  const [viewMode, setViewMode] = useState('grid');
 
-  // API 
-  const dummyTasks = [
-    {
-      _id: '1',
-      title: 'Complete Task Management UI Layout',
-      desc: 'Implement all dashboard modules with responsive layout and proper fallback.',
-      priority: 'High',
-      status: 'In Progress',
-      dueDate: 'Tomorrow',
-    },
-    {
-      _id: '2',
-      title: 'Fix Global Auth Logout State Bug',
-      desc: 'Resolve the local storage token clear issue on fast double clicking logout.',
-      priority: 'Medium',
-      status: 'Pending',
-      dueDate: '22 April 2026',
-    },
-    {
-      _id: '3',
-      title: 'Setup Mongoose Schema & Router Api',
-      desc: 'Design backend user model, schema rules, regex validation and routes.',
-      priority: 'Low',
-      status: 'Completed',
-      dueDate: 'Completed',
-    },
-    {
-      _id: '4',
-      title: 'Integrate Tailwind IntelliSense Fixes',
-      desc: 'Fix editor class auto-complete bug inside custom modules.',
-      priority: 'Medium',
-      status: 'In Progress',
-      dueDate: '25 April 2026',
-    },
-  ];
+  // TanStack Query Hook with dynamic filters
+  const filters = {
+    search: searchQuery,
+    status: statusFilter !== 'All' ? statusFilter : undefined,
+  };
 
-  const tasks = dummyTasks;
+  const {
+    data: tasksData,
+    isLoading,
+    isError,
+    error,
+  } = useMyTasksQuery(filters);
 
-  // search and filtering logic
-  const filteredTasks = tasks.filter((task) => {
-    const matchesSearch =
-      task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      task.desc.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus =
-      statusFilter === 'All' || task.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
+  // If backend returns data as an array directly or inside an object array
+  const tasks = Array.isArray(tasksData) ? tasksData : tasksData?.tasks || [];
 
   const getStatusStyle = (status) => {
     switch (status) {
@@ -73,7 +39,7 @@ const MyTasksPage = () => {
 
   return (
     <div className="space-y-6">
-      {/* 1. Header Section */}
+      {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-black text-white tracking-wide">
@@ -92,9 +58,8 @@ const MyTasksPage = () => {
         </button>
       </div>
 
-      {/* 2. Controls Section (Search, Filter, View Switcher) */}
+      {/* Filter and Control Bar */}
       <div className="flex flex-col md:flex-row gap-3 items-center justify-between p-4 rounded-xl border border-slate-800/60 bg-[#0b1120]/40">
-        {/* Search Input */}
         <div className="relative w-full md:w-80">
           <FaSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs" />
           <input
@@ -106,9 +71,7 @@ const MyTasksPage = () => {
           />
         </div>
 
-        {/* Filters and Toggle View */}
         <div className="flex items-center justify-between md:justify-end gap-3 w-full md:w-auto">
-          {/* Status Dropdown */}
           <div className="flex items-center gap-2">
             <FaFilter className="text-slate-500 text-[10px]" />
             <select
@@ -123,17 +86,24 @@ const MyTasksPage = () => {
             </select>
           </div>
 
-          {/* Grid/List Toggle Buttons */}
           <div className="flex items-center bg-slate-950 border border-slate-800 p-0.5 rounded-xl">
             <button
               onClick={() => setViewMode('grid')}
-              className={`p-2 rounded-lg text-xs transition-colors cursor-pointer ${viewMode === 'grid' ? 'bg-slate-900 text-[#646cff]' : 'text-slate-500 hover:text-slate-300'}`}
+              className={`p-2 rounded-lg text-xs transition-colors cursor-pointer ${
+                viewMode === 'grid'
+                  ? 'bg-slate-900 text-[#646cff]'
+                  : 'text-slate-500 hover:text-slate-300'
+              }`}
             >
               <FaThLarge />
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={`p-2 rounded-lg text-xs transition-colors cursor-pointer ${viewMode === 'list' ? 'bg-slate-900 text-[#646cff]' : 'text-slate-500 hover:text-slate-300'}`}
+              className={`p-2 rounded-lg text-xs transition-colors cursor-pointer ${
+                viewMode === 'list'
+                  ? 'bg-slate-900 text-[#646cff]'
+                  : 'text-slate-500 hover:text-slate-300'
+              }`}
             >
               <FaList />
             </button>
@@ -141,27 +111,34 @@ const MyTasksPage = () => {
         </div>
       </div>
 
-      {/* 3. Tasks Render Area */}
-      {filteredTasks.length === 0 ? (
+      {/* Task Content State Display */}
+      {isLoading ? (
+        <div className="text-center py-12 text-xs text-slate-500">
+          Loading tasks...
+        </div>
+      ) : isError ? (
+        <div className="text-center py-12 text-xs text-rose-500">
+          Failed to load tasks: {error?.message || 'Something went wrong'}
+        </div>
+      ) : tasks.length === 0 ? (
         <div className="text-center py-12 border border-dashed border-slate-800 rounded-2xl">
-          <p className="text-slate-500 text-xs font-medium">
-            No tasks found matching your filters.
-          </p>
+          <p className="text-slate-500 text-xs font-medium">No tasks found.</p>
         </div>
       ) : viewMode === 'grid' ? (
-        /* Grid Layout Mode */
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredTasks.map((task) => (
+          {tasks.map((task) => (
             <div
-              key={task._id}
+              key={task._id || task.id}
               className="p-5 rounded-2xl border border-slate-800/80 bg-[#0b1120]/60 hover:border-slate-700/60 transition-all duration-300 flex flex-col justify-between group"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span
-                    className={`px-2 py-0.5 rounded text-[9px] font-black border uppercase tracking-wider ${getStatusStyle(task.status)}`}
+                    className={`px-2 py-0.5 rounded text-[9px] font-black border uppercase tracking-wider ${getStatusStyle(
+                      task.status,
+                    )}`}
                   >
-                    {task.status}
+                    {task.status || 'Pending'}
                   </span>
                   <span
                     className={`text-[10px] font-extrabold uppercase ${
@@ -172,23 +149,27 @@ const MyTasksPage = () => {
                           : 'text-sky-400'
                     }`}
                   >
-                    {task.priority}
+                    {task.priority || 'Medium'}
                   </span>
                 </div>
                 <h3 className="text-sm font-bold text-slate-200 group-hover:text-[#646cff] duration-300 line-clamp-1">
                   {task.title}
                 </h3>
                 <p className="text-xs text-slate-500 line-clamp-2 font-medium leading-relaxed">
-                  {task.desc}
+                  {task.description || 'No description provided.'}
                 </p>
               </div>
 
               <div className="border-t border-slate-800/40 pt-4 mt-4 flex items-center justify-between text-[11px]">
                 <span className="text-slate-500 font-medium">
-                  ⏰ {task.dueDate}
+                  ⏰ {task.dueDate || task.due || 'No Due Date'}
                 </span>
                 <button
-                  onClick={() => navigate(`/dashboard/tasks/edit/${task._id}`)}
+                  onClick={() =>
+                    navigate(
+                      `/user-dashboard/tasks/edit/${task._id || task.id}`,
+                    )
+                  }
                   className="text-[#646cff] font-bold hover:underline cursor-pointer"
                 >
                   Manage
@@ -198,7 +179,6 @@ const MyTasksPage = () => {
           ))}
         </div>
       ) : (
-        /* List Layout Mode */
         <div className="rounded-2xl border border-slate-800/80 bg-[#0b1120]/40 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
@@ -212,9 +192,9 @@ const MyTasksPage = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/40 text-xs">
-                {filteredTasks.map((task) => (
+                {tasks.map((task) => (
                   <tr
-                    key={task._id}
+                    key={task._id || task.id}
                     className="hover:bg-slate-900/20 transition-colors"
                   >
                     <td className="px-5 py-4 max-w-[240px]">
@@ -222,7 +202,7 @@ const MyTasksPage = () => {
                         {task.title}
                       </div>
                       <div className="text-[11px] text-slate-500 truncate mt-0.5">
-                        {task.desc}
+                        {task.description || 'No description'}
                       </div>
                     </td>
                     <td className="px-5 py-4">
@@ -235,23 +215,27 @@ const MyTasksPage = () => {
                               : 'text-sky-400'
                         }`}
                       >
-                        {task.priority}
+                        {task.priority || 'Medium'}
                       </span>
                     </td>
                     <td className="px-5 py-4">
                       <span
-                        className={`px-2 py-0.5 rounded text-[9px] font-black border uppercase tracking-wider ${getStatusStyle(task.status)}`}
+                        className={`px-2 py-0.5 rounded text-[9px] font-black border uppercase tracking-wider ${getStatusStyle(
+                          task.status,
+                        )}`}
                       >
-                        {task.status}
+                        {task.status || 'Pending'}
                       </span>
                     </td>
                     <td className="px-5 py-4 text-slate-400 font-medium">
-                      {task.dueDate}
+                      {task.dueDate || task.due || 'No Due Date'}
                     </td>
                     <td className="px-5 py-4 text-right">
                       <button
                         onClick={() =>
-                          navigate(`/dashboard/tasks/edit/${task._id}`)
+                          navigate(
+                            `/user-dashboard/tasks/edit/${task._id || task.id}`,
+                          )
                         }
                         className="text-[#646cff] font-bold hover:underline cursor-pointer"
                       >

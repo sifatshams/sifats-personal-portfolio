@@ -5,9 +5,9 @@ const UserQuickActions = () => {
   const navigate = useNavigate();
 
   const actions = [
-    { label: '➕ New Task', path: '/dashboard/tasks/new' },
-    { label: '⚙️ Account Settings', path: '/dashboard/settings' },
-    { label: '👤 View Profile', path: '/dashboard/profile' },
+    { label: '➕ New Task', path: '/user-dashboard/tasks/new' },
+    { label: '⚙️ Account Settings', path: '/user-dashboard/settings' },
+    { label: '👤 View Profile', path: '/user-dashboard/profile' },
   ];
 
   return (

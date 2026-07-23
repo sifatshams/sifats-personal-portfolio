@@ -2,18 +2,16 @@
 import { FaCheckCircle, FaProjectDiagram, FaTasks } from 'react-icons/fa';
 
 const UserDashboardStats = ({ stats }) => {
-  // API থেকে ডাটা না আসলে এই ডামি অবজেক্ট ব্যবহার হবে
-  const displayStats = {
-    totalTasks: stats?.totalTasks ?? 12,
-    completedTasks: stats?.completedTasks ?? 8,
-    completionRate: stats?.completionRate ?? 66,
-    activeProjects: stats?.activeProjects ?? 3,
-  };
+  // Extract values directly with clean fallbacks
+  const totalTasks = stats?.totalTasks ?? 0;
+  const completedTasks = stats?.completedTasks ?? 0;
+  const completionRate = stats?.completionRate ?? 0;
+  const activeProjects = stats?.activeProjects ?? 0;
 
   const cardData = [
     {
       title: 'Total Tasks',
-      value: displayStats.totalTasks,
+      value: totalTasks,
       desc: 'Assigned to your profile',
       icon: <FaTasks />,
       colorClass: 'group-hover:text-[#646cff]',
@@ -21,15 +19,15 @@ const UserDashboardStats = ({ stats }) => {
     },
     {
       title: 'Completed',
-      value: displayStats.completedTasks,
-      desc: `${displayStats.completionRate}% efficiency score`,
+      value: completedTasks,
+      desc: `${completionRate}% efficiency score`,
       icon: <FaCheckCircle />,
       colorClass: 'group-hover:text-emerald-400',
       borderClass: 'hover:border-emerald-500/40',
     },
     {
       title: 'Active Projects',
-      value: displayStats.activeProjects,
+      value: activeProjects,
       desc: 'Ongoing work spaces',
       icon: <FaProjectDiagram />,
       colorClass: 'group-hover:text-sky-400',

@@ -1,16 +1,19 @@
 // @ts-nocheck
-const TaskDistributionChart = ({ data, completionRate }) => {
-  // API ডাটা না থাকলে ডামি এনালিটিক্স অ্যারে রেডি
-  const analytics = data || [
-    { label: 'In Progress', count: 4, percentage: 40, color: 'bg-amber-500' },
-    { label: 'Completed', count: 8, percentage: 66, color: 'bg-emerald-500' },
-    {
-      label: 'To Do / Backlog',
-      count: 2,
-      percentage: 14,
-      color: 'bg-slate-500',
-    },
-  ];
+const TaskDistributionChart = ({ analytics = [] }) => {
+  // Calculate completion percentage from analytics or default to 0
+  const completedItem = analytics.find(
+    (item) => item.label?.toLowerCase() === 'completed'
+  );
+  
+  const completionRate = completedItem?.percentage ?? 0;
+
+  // Map backend labels or status to specific theme colors
+  const getColorClass = (label = '') => {
+    const lower = label.toLowerCase();
+    if (lower.includes('progress')) return 'bg-amber-500';
+    if (lower.includes('completed') || lower.includes('done')) return 'bg-emerald-500';
+    return 'bg-slate-500';
+  };
 
   return (
     <div className="p-6 rounded-2xl border border-slate-800/80 bg-[#0b1120]/60 h-full">
@@ -24,27 +27,33 @@ const TaskDistributionChart = ({ data, completionRate }) => {
           </p>
         </div>
         <span className="text-xs font-black text-[#646cff] bg-[#646cff]/10 px-2.5 py-1 rounded-md">
-          {completionRate ?? 66}% Done
+          {completionRate}% Done
         </span>
       </div>
 
       <div className="space-y-5">
-        {analytics.map((item, index) => (
-          <div key={index} className="space-y-2">
-            <div className="flex justify-between text-xs font-bold">
-              <span className="text-slate-300">{item.label}</span>
-              <span className="text-slate-400">
-                {item.count} Tasks ({item.percentage}%)
-              </span>
+        {analytics.length > 0 ? (
+          analytics.map((item, index) => (
+            <div key={index} className="space-y-2">
+              <div className="flex justify-between text-xs font-bold">
+                <span className="text-slate-300">{item.label}</span>
+                <span className="text-slate-400">
+                  {item.count} Tasks ({item.percentage}%)
+                </span>
+              </div>
+              <div className="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-slate-900">
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ${item.color || getColorClass(item.label)}`}
+                  style={{ width: `${item.percentage}%` }}
+                />
+              </div>
             </div>
-            <div className="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-slate-900">
-              <div
-                className={`h-full rounded-full transition-all duration-500 ${item.color}`}
-                style={{ width: `${item.percentage}%` }}
-              />
-            </div>
+          ))
+        ) : (
+          <div className="py-8 text-center text-xs text-slate-500">
+            No analytics data available.
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
