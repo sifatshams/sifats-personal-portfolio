@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {
   FaAlignLeft,
   FaArrowLeft,
@@ -14,26 +14,31 @@ const CreateTaskPage = () => {
   const navigate = useNavigate();
   const { mutateAsync: createTask, isPending } = useCreateTaskMutation();
 
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    priority: 'Medium',
-    status: 'Pending',
-    dueDate: '',
+  // react-hook-form setup
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      title: '',
+      description: '',
+      priority: 'Medium',
+      dueDate: '',
+    },
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     try {
-      await createTask(formData);
+      // Backend dynamic mapping: sending both desc and description
+      const payload = {
+        ...data,
+        description: data.description,
+      };
+
+      await createTask(payload);
       navigate('/user-dashboard/tasks');
     } catch (error) {
-      // Error handling is already managed inside the mutation hook's onError callback
       console.error('Task creation failed:', error);
     }
   };
@@ -60,37 +65,57 @@ const CreateTaskPage = () => {
       <div className="p-6 rounded-2xl border border-slate-800/80 bg-[#0b1120]/40 shadow-xl relative overflow-hidden">
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#646cff]/5 rounded-full blur-2xl" />
 
-        <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-5 relative z-10"
+        >
+          {/* Title Field */}
           <div className="space-y-1.5">
             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
               <FaHeading className="text-slate-600 text-[10px]" /> Task Title
             </label>
             <input
               type="text"
-              name="title"
-              required
               placeholder="e.g., Fix Sidebar Navigation Bug"
-              value={formData.title}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-slate-950/60 border border-slate-800 text-xs text-slate-200 placeholder-slate-600 rounded-xl focus:outline-none focus:border-[#646cff]/50 transition-colors"
+              {...register('title', { required: 'Task title is required' })}
+              className={`w-full px-4 py-3 bg-slate-950/60 border text-xs text-slate-200 placeholder-slate-600 rounded-xl focus:outline-none transition-colors ${
+                errors.title
+                  ? 'border-rose-500/80 focus:border-rose-500'
+                  : 'border-slate-800 focus:border-[#646cff]/50'
+              }`}
             />
+            {errors.title && (
+              <p className="text-[10px] text-rose-400 mt-1 font-medium">
+                {errors.title.message}
+              </p>
+            )}
           </div>
 
+          {/* Description Field */}
           <div className="space-y-1.5">
             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
               <FaAlignLeft className="text-slate-600 text-[10px]" /> Description
             </label>
             <textarea
-              name="description"
               rows="4"
-              required
               placeholder="Describe what needs to be done..."
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-slate-950/60 border border-slate-800 text-xs text-slate-200 placeholder-slate-600 rounded-xl focus:outline-none focus:border-[#646cff]/50 transition-colors resize-none leading-relaxed"
+              {...register('description', {
+                required: 'Task description is required',
+              })}
+              className={`w-full px-4 py-3 bg-slate-950/60 border text-xs text-slate-200 placeholder-slate-600 rounded-xl focus:outline-none transition-colors resize-none leading-relaxed ${
+                errors.description
+                  ? 'border-rose-500/80 focus:border-rose-500'
+                  : 'border-slate-800 focus:border-[#646cff]/50'
+              }`}
             />
+            {errors.description && (
+              <p className="text-[10px] text-rose-400 mt-1 font-medium">
+                {errors.desc.message}
+              </p>
+            )}
           </div>
 
+          {/* Priority & Due Date */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
@@ -98,9 +123,7 @@ const CreateTaskPage = () => {
                 Priority Level
               </label>
               <select
-                name="priority"
-                value={formData.priority}
-                onChange={handleChange}
+                {...register('priority')}
                 className="w-full px-4 py-3 bg-slate-950/60 border border-slate-800 text-xs text-slate-300 rounded-xl focus:outline-none cursor-pointer"
               >
                 <option value="Low">🟢 Low Priority</option>
@@ -116,15 +139,22 @@ const CreateTaskPage = () => {
               </label>
               <input
                 type="date"
-                name="dueDate"
-                required
-                value={formData.dueDate}
-                onChange={handleChange}
-                className="w-full px-4 py-3 bg-slate-950/60 border border-slate-800 text-xs text-slate-300 rounded-xl focus:outline-none focus:border-[#646cff]/50 transition-colors cursor-pointer"
+                {...register('dueDate', { required: 'Due date is required' })}
+                className={`w-full px-4 py-3 bg-slate-950/60 border text-xs text-slate-300 rounded-xl focus:outline-none transition-colors cursor-pointer ${
+                  errors.dueDate
+                    ? 'border-rose-500/80 focus:border-rose-500'
+                    : 'border-slate-800 focus:border-[#646cff]/50'
+                }`}
               />
+              {errors.dueDate && (
+                <p className="text-[10px] text-rose-400 mt-1 font-medium">
+                  {errors.dueDate.message}
+                </p>
+              )}
             </div>
           </div>
 
+          {/* Actions */}
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800/40 mt-6">
             <button
               type="button"
