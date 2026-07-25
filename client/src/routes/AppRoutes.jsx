@@ -42,6 +42,7 @@ import PrivateRoute from './PrivateRoute';
 
 import ProgressBar from '../components/ProgressBar';
 import CreateTaskPage from '../pages/user-dashboard/CreateTaskPage';
+import EditTaskPage from '../pages/user-dashboard/EditTaskPage';
 import MyTasksPage from '../pages/user-dashboard/MyTasksPage';
 
 const AppRoutes = () => {
@@ -102,8 +103,11 @@ const AppRoutes = () => {
           {/* user task */}
           <Route path="tasks" element={<MyTasksPage />} />
 
-          {/* edit task */}
+          {/* create task task */}
           <Route path="tasks/new" element={<CreateTaskPage />} />
+
+          {/* edit task */}
+          <Route path="tasks/edit/:id" element={<EditTaskPage />} />
         </Route>
 
         {/* admin dashboard */}

@@ -11,8 +11,10 @@ import {
   FaTasks,
 } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMyTasksQuery, useUpdateTaskMutation } from '../../hooks/user/useTaskQuery';
-
+import {
+  useMyTasksQuery,
+  useUpdateTaskMutation,
+} from '../../hooks/user/useTaskQuery';
 
 const EditTaskPage = () => {
   const { id } = useParams();

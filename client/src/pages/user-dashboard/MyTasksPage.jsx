@@ -10,7 +10,7 @@ const MyTasksPage = () => {
   const [statusFilter, setStatusFilter] = useState('All');
   const [viewMode, setViewMode] = useState('grid');
 
-  // TanStack Query Hook with dynamic filters
+  // tanStack Query Hook with dynamic filters
   const filters = {
     search: searchQuery,
     status: statusFilter !== 'All' ? statusFilter : undefined,
@@ -23,7 +23,7 @@ const MyTasksPage = () => {
     error,
   } = useMyTasksQuery(filters);
 
-  // If backend returns data as an array directly or inside an object array
+  // if backend returns data as an array directly or inside an object array
   const tasks = Array.isArray(tasksData) ? tasksData : tasksData?.tasks || [];
 
   const getStatusStyle = (status) => {
