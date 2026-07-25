@@ -44,6 +44,7 @@ import ProgressBar from '../components/ProgressBar';
 import CreateTaskPage from '../pages/user-dashboard/CreateTaskPage';
 import EditTaskPage from '../pages/user-dashboard/EditTaskPage';
 import MyTasksPage from '../pages/user-dashboard/MyTasksPage';
+import TaskAnalytics from '../pages/user-dashboard/TaskAnalytics';
 
 const AppRoutes = () => {
   return (
@@ -108,6 +109,9 @@ const AppRoutes = () => {
 
           {/* edit task */}
           <Route path="tasks/edit/:id" element={<EditTaskPage />} />
+
+          {/* task analytics */}
+          <Route path="analytics" element={<TaskAnalytics />} />
         </Route>
 
         {/* admin dashboard */}
