@@ -1,7 +1,7 @@
 import MessagesTable from '../../components/admin_dashboard/MessagesTable';
 import { useAllMessagesQuery } from '../../hooks/admin/useMessageQuery';
 
-const AllMessagesPage = () => {
+const AllMessages = () => {
   const { data: messages, isLoading, isError } = useAllMessagesQuery();
 
   if (isLoading) {
@@ -34,4 +34,4 @@ const AllMessagesPage = () => {
   );
 };
 
-export default AllMessagesPage;
+export default AllMessages;

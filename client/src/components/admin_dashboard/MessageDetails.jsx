@@ -12,7 +12,7 @@ import {
   useMarkMessageAsReadMutation,
 } from '../../hooks/admin/useMessageQuery';
 
-const MessageDetailsPage = () => {
+const MessageDetails = () => {
   const { id } = useParams();
   const { data: message, isLoading, isError } = useGetMessageByIdQuery(id);
   const { mutate: markAsRead } = useMarkMessageAsReadMutation();
@@ -129,4 +129,4 @@ const MessageDetailsPage = () => {
   );
 };
 
-export default MessageDetailsPage;
+export default MessageDetails;
