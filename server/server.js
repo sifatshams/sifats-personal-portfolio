@@ -12,7 +12,7 @@ dotenv.config({
 // .env
 const port = process.env.PORT || 3000;
 
-// if database connection success then start the server
+// if database connection success then start's the server
 connectDB().then(() => {
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
