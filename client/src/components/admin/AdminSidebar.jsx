@@ -1,7 +1,6 @@
 import {
   FaAngleLeft,
   FaAngleRight,
-  FaBars,
   FaChartLine,
   FaCog,
   FaEnvelope,
@@ -59,24 +58,13 @@ const AdminSidebar = ({
   // logout handler
   const handleLogout = () => {
     logout();
-    // success msg
     toast.success('Admin logged out successfully!');
-
-    // redirect
     navigate('/login');
   };
 
   return (
     <>
-      {/* mobile button */}
-      <button
-        onClick={() => setSidebarOpen(true)}
-        className="lg:hidden fixed top-5 left-5 z-[100] bg-slate-900 border border-slate-800 p-3 rounded-xl"
-      >
-        <FaBars />
-      </button>
-
-      {/* backdrop overlay */}
+      {/* backdrop overlay for mobile */}
       {sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}
@@ -86,7 +74,11 @@ const AdminSidebar = ({
 
       {/* main navigation sidebar drawer */}
       <aside
-        className={`fixed top-0 left-0 h-screen z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-r border-slate-800 overflow-visible transition-all duration-500 ease-in-out ${collapsed ? 'lg:w-24' : 'lg:w-72'} ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} w-72 lg:translate-x-0`}
+        className={`fixed top-0 left-0 h-screen z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-r border-slate-800 overflow-visible transition-all duration-500 ease-in-out ${
+          collapsed ? 'lg:w-24' : 'lg:w-72'
+        } ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } w-72 lg:translate-x-0`}
       >
         {/* accent background glow */}
         <div className="absolute top-20 left-10 w-52 h-52 rounded-full bg-[#646cff]/20 blur-[100px]" />
@@ -102,7 +94,9 @@ const AdminSidebar = ({
         <div className="relative z-10 flex flex-col h-full">
           {/* logo wrapper */}
           <div
-            className={`relative border-b border-slate-800 transition-all duration-500 ${collapsed ? 'px-4 py-6' : 'px-6 py-6'}`}
+            className={`relative border-b border-slate-800 transition-all duration-500 ${
+              collapsed ? 'px-4 py-6' : 'px-6 py-6'
+            }`}
           >
             <Link
               to="/"
@@ -128,7 +122,9 @@ const AdminSidebar = ({
 
             <Link
               to="/"
-              className={`mt-4 w-full flex items-center justify-center gap-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-[#646cff] hover:text-white hover:border-[#646cff] transition-all duration-300 py-2 text-sm ${collapsed ? 'px-2' : ''} `}
+              className={`mt-4 w-full flex items-center justify-center gap-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-[#646cff] hover:text-white hover:border-[#646cff] transition-all duration-300 py-2 text-sm ${
+                collapsed ? 'px-2' : ''
+              } `}
             >
               <FaHome />
               {!collapsed && 'Back to Home'}
@@ -151,7 +147,9 @@ const AdminSidebar = ({
                   end={menu.path === '/admin-dashboard'}
                   onClick={() => setSidebarOpen(false)}
                   className={({ isActive }) =>
-                    `group relative flex items-center ${collapsed ? 'justify-center px-0' : 'gap-4 px-5'} py-4 rounded-2xl transition-all duration-300 overflow-hidden ${
+                    `group relative flex items-center ${
+                      collapsed ? 'justify-center px-0' : 'gap-4 px-5'
+                    } py-4 rounded-2xl transition-all duration-300 overflow-hidden ${
                       isActive
                         ? 'bg-gradient-to-r from-[#646cff] to-[#4e5dff] text-white shadow-lg shadow-[#646cff]/20'
                         : 'text-slate-300 hover:bg-slate-900 hover:text-white hover:translate-x-2 hover:border hover:border-[#646cff]/40'
@@ -189,7 +187,6 @@ const AdminSidebar = ({
             >
               {collapsed ? (
                 <div className="flex flex-col items-center gap-2">
-                  {/* layout avatar fallback when collapsed */}
                   {user?.profileImage?.url ? (
                     <img
                       src={user.profileImage.url}
@@ -211,7 +208,6 @@ const AdminSidebar = ({
               ) : (
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2.5 min-w-0">
-                    {/* layout avatar fallback when expanded */}
                     {user?.profileImage?.url ? (
                       <img
                         src={user.profileImage.url}
