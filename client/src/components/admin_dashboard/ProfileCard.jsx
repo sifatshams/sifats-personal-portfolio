@@ -103,7 +103,7 @@ const ProfileCard = () => {
         <div className="mb-6 flex items-center justify-between gap-3 relative z-10">
           <h2 className="flex items-center gap-2.5 text-lg font-bold text-white tracking-wide whitespace-nowrap">
             <FaUser className="text-[#646cff] shrink-0" />
-            <span>Admin Profile Overview</span>
+            <span>Profile Overview</span>
           </h2>
 
           {!isEditing && (
