@@ -100,19 +100,20 @@ const ProfileCard = () => {
         <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-[#646cff]/10 blur-3xl pointer-events-none" />
 
         {/* Header */}
-        <div className="mb-6 flex items-center justify-between relative z-10">
-          <h2 className="flex items-center gap-2.5 text-lg font-bold text-white tracking-wide">
-            <FaUser className="text-[#646cff]" />
-            Admin Profile Overview
+        <div className="mb-6 flex items-center justify-between gap-3 relative z-10">
+          <h2 className="flex items-center gap-2.5 text-lg font-bold text-white tracking-wide whitespace-nowrap">
+            <FaUser className="text-[#646cff] shrink-0" />
+            <span>Admin Profile Overview</span>
           </h2>
 
           {!isEditing && (
             <button
               type="button"
               onClick={() => setIsEditing(true)}
-              className="flex items-center gap-2 px-4 py-2 cursor-pointer rounded-xl bg-slate-900 border border-slate-800 hover:border-[#646cff]/40 text-slate-200 hover:text-[#646cff] font-bold text-xs transition duration-300 active:scale-95"
+              className="flex items-center gap-2 px-4 py-2 cursor-pointer rounded-xl bg-slate-900 border border-slate-800 hover:border-[#646cff]/40 text-slate-200 hover:text-[#646cff] font-bold text-xs transition duration-300 active:scale-95 whitespace-nowrap shrink-0"
             >
-              <FaEdit className="text-xs" /> Edit Profile
+              <FaEdit className="text-xs shrink-0" />
+              <span>Edit Profile</span>
             </button>
           )}
         </div>
